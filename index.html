@@ -382,7 +382,70 @@
     <a class="footer__top" href="#main">Back to top <span aria-hidden="true">↑</span></a>
   </footer>
 
+  <aside class="chat-widget" data-chat-widget aria-label="Portfolio assistant">
+    <section
+      class="chat-panel"
+      id="portfolio-chat"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="chat-title"
+      aria-hidden="true"
+      inert
+    >
+      <header class="chat-panel__header">
+        <div>
+          <span class="chat-panel__eyebrow"><i aria-hidden="true"></i>Portfolio intelligence</span>
+          <h2 id="chat-title">Ask about Reid.</h2>
+        </div>
+        <button class="chat-panel__close" type="button" aria-label="Close portfolio assistant">
+          <span aria-hidden="true">×</span>
+        </button>
+      </header>
+
+      <div class="chat-messages" aria-live="polite" aria-relevant="additions text">
+        <div class="chat-message chat-message--assistant">
+          <span class="chat-message__label" aria-hidden="true">RT / AI</span>
+          <p><span class="visually-hidden">Assistant: </span>I can answer questions about Reid’s work, skills, education, and experience.</p>
+        </div>
+      </div>
+
+      <div class="chat-suggestions" role="group" aria-label="Suggested questions">
+        <button type="button" data-question="What has Reid built?">What has Reid built?</button>
+        <button type="button" data-question="What are Reid's strongest technical skills?">Technical skills</button>
+        <button type="button" data-question="Is Reid available for internships?">Availability</button>
+      </div>
+
+      <form class="chat-form">
+        <label class="visually-hidden" for="chat-input">Ask a question about Reid’s portfolio</label>
+        <textarea
+          id="chat-input"
+          name="message"
+          rows="1"
+          maxlength="400"
+          placeholder="Ask about projects, skills, or experience…"
+          autocomplete="off"
+          required
+        ></textarea>
+        <button class="chat-form__send" type="submit" aria-label="Send question">
+          <span aria-hidden="true">↗</span>
+        </button>
+      </form>
+      <p class="chat-status" role="status">AI answers are grounded in this portfolio.</p>
+    </section>
+
+    <button
+      class="chat-launcher"
+      type="button"
+      aria-expanded="false"
+      aria-controls="portfolio-chat"
+    >
+      <span class="chat-launcher__signal" aria-hidden="true"><i></i></span>
+      <span>Ask the portfolio</span>
+      <span class="chat-launcher__icon" aria-hidden="true">↗</span>
+    </button>
+  </aside>
 
   <script src="main.js"></script>
+  <script src="chat.js"></script>
 </body>
 </html>
