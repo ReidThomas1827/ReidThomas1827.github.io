@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portfolio of Reid Thomas — Computer Science &amp; Engineering Technology student, IT consultant, and aspiring developer at the University of Toledo.">
+  <meta name="theme-color" content="#0e0e0e">
+  <meta property="og:title" content="Reid Thomas — Portfolio">
+  <meta property="og:description" content="Software, systems, and engineering work by Reid Thomas.">
+  <meta property="og:type" content="website">
+  <title>Reid Thomas — CS &amp; Engineering Technology</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- ─── Navigation ──────────────────────────────────────────── -->
+  <header class="site-header" role="banner">
+    <nav class="nav" aria-label="Primary navigation">
+      <a href="#main" class="nav__logo" aria-label="Reid Thomas — home">RT</a>
+
+      <button
+        class="nav__toggle"
+        aria-expanded="false"
+        aria-controls="nav-menu"
+        aria-label="Open navigation menu"
+      >
+        <span class="nav__bar" aria-hidden="true"></span>
+        <span class="nav__bar" aria-hidden="true"></span>
+      </button>
+
+      <ul class="nav__menu" id="nav-menu" role="list">
+        <li><a href="#about"      class="nav__link">About</a></li>
+        <li><a href="#work"       class="nav__link">Work</a></li>
+        <li><a href="#experience" class="nav__link">Experience</a></li>
+        <li><a href="#contact"    class="nav__link">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main">
+
+    <!-- ─── Hero ────────────────────────────────────────────────── -->
+    <section class="hero" aria-label="Introduction">
+      <div class="hero__inner">
+        <p class="hero__kicker">
+          <span class="kicker-rule" aria-hidden="true"></span>
+          Computer Science &amp; Engineering Technology
+        </p>
+        <h1 class="hero__name">Reid<br>Thomas.</h1>
+        <p class="hero__tagline">
+          CS student at University of Toledo — building at the intersection
+          of software, systems, and leadership.
+        </p>
+        <div class="hero__actions">
+          <a href="#work"    class="btn btn--fill">View Work</a>
+          <a href="#contact" class="btn btn--ghost">Get in Touch</a>
+        </div>
+      </div>
+      <aside class="hero__index" aria-hidden="true">
+        <span>01</span>
+        <span>Portfolio</span>
+        <time id="portfolio-year"></time>
+      </aside>
+    </section>
+
+    <!-- ─── About ────────────────────────────────────────────────── -->
+    <section class="section about" id="about" aria-labelledby="about-heading">
+      <header class="section__head">
+        <span class="section__num" aria-hidden="true">01</span>
+        <h2 class="section__title" id="about-heading">About</h2>
+      </header>
+
+      <div class="about__layout">
+        <div class="about__bio">
+          <p class="about__lead">
+            I'm a Computer Science &amp; Engineering Technology student at the University of Toledo,
+            pursuing a minor in Business Administration. 4.0 GPA. Dean's List. President's List.
+          </p>
+          <p>
+            I care about the full stack — from assembly language and programmable logic controllers
+            on the hardware side, to Python and object-oriented programming on the software side.
+            I'm currently working as an IT Consultant for the UT Engineering College while supporting
+            UT's athletic programs as an operations assistant.
+          </p>
+          <p>
+            Outside of academics I was honored with a basketball award named in my recognition —
+            given annually to players who demonstrate toughness, dependability, and selflessness.
+            Those same values carry into everything I build.
+          </p>
+          <a href="mailto:reidcthomas.05@gmail.com" class="btn btn--ghost btn--sm">Get in Touch →</a>
+        </div>
+
+        <div class="about__skills">
+          <h3 class="skills__heading">Skills &amp; Coursework</h3>
+          <ul class="skills__list" role="list">
+            <li class="skill">
+              <span class="skill__cat">Languages</span>
+              <span class="skill__items">Python · Assembly · Ladder Logic (PLC)</span>
+            </li>
+            <li class="skill">
+              <span class="skill__cat">Tools</span>
+              <span class="skill__items">GitHub · IntelliJ · Microsoft Visual Studio</span>
+            </li>
+            <li class="skill">
+              <span class="skill__cat">Coursework</span>
+              <span class="skill__items">Digital Logic · OOP &amp; Data Structures · PC &amp; Industrial Networks · Computer Architecture</span>
+            </li>
+            <li class="skill">
+              <span class="skill__cat">Education</span>
+              <span class="skill__items">University of Toledo · B.S. CS &amp; Engineering Tech · Minor: Business Admin · Expected Dec. 2027</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Academic Work ─────────────────────────────────────────── -->
+    <section class="section projects" id="work" aria-labelledby="work-heading">
+      <header class="section__head">
+        <span class="section__num" aria-hidden="true">02</span>
+        <h2 class="section__title" id="work-heading">Academic Work</h2>
+      </header>
+
+      <div class="projects__grid">
+
+        <article class="card card--featured">
+          <div class="card__meta">
+            <span class="card__year">2025</span>
+            <span class="card__type">PLC Programming</span>
+          </div>
+          <h3 class="card__title">PC &amp; Industrial Networks</h3>
+          <p class="card__desc">
+            Developed and troubleshot programmable controller programs for factory floor control,
+            with a focus on relays, timers, counters, integer math, and scan-dependent programming.
+            Emphasized logic development, system reliability, and process efficiency in real
+            industrial control environments.
+          </p>
+          <ul class="card__tech" role="list" aria-label="Technologies">
+            <li>PLC / Ladder Logic</li>
+            <li>Industrial Networks</li>
+            <li>Factory Control Systems</li>
+            <li>Relay Logic</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <div class="card__meta">
+            <span class="card__year">2024</span>
+            <span class="card__type">Python</span>
+          </div>
+          <h3 class="card__title">Intro to Computer Science</h3>
+          <p class="card__desc">
+            Explored Python fundamentals — coding logic, data structures, and algorithms.
+            Built a functional calculator and implemented data analysis scripts, establishing
+            a strong programming foundation.
+          </p>
+          <ul class="card__tech" role="list" aria-label="Technologies">
+            <li>Python</li>
+            <li>Data Structures</li>
+            <li>Algorithms</li>
+          </ul>
+          <div class="card__links">
+            <a
+              href="https://github.com/ReidThomas1827"
+              class="card__link"
+              aria-label="View GitHub profile"
+              target="_blank"
+              rel="noopener noreferrer"
+            >GitHub ↗</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card__meta">
+            <span class="card__year">2024–25</span>
+            <span class="card__type">Systems</span>
+          </div>
+          <h3 class="card__title">Digital Logic &amp; Computer Architecture</h3>
+          <p class="card__desc">
+            Studied how software maps to hardware through Boolean logic, digital circuits,
+            processor organization, and assembly language. Built a practical foundation for
+            reasoning about computers below the application layer.
+          </p>
+          <ul class="card__tech" role="list" aria-label="Technologies">
+            <li>Assembly</li>
+            <li>Digital Logic</li>
+            <li>Computer Architecture</li>
+          </ul>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ─── Experience ──────────────────────────────────────────── -->
+    <section class="section experience" id="experience" aria-labelledby="experience-heading">
+      <header class="section__head">
+        <span class="section__num" aria-hidden="true">03</span>
+        <h2 class="section__title" id="experience-heading">Experience</h2>
+      </header>
+
+      <ol class="xp__list" role="list">
+
+        <li class="xp__item">
+          <div class="xp__period">
+            <time datetime="2025">2025</time>
+            <span aria-hidden="true">–</span>
+            <time>Present</time>
+          </div>
+          <div class="xp__body">
+            <h3 class="xp__role">IT Consultant</h3>
+            <p class="xp__org">University of Toledo Engineering College Computing <span class="xp__loc">· Toledo, OH</span></p>
+            <p class="xp__desc">
+              Troubleshot desktop computers, printers, and related devices to support faculty, staff,
+              and students. Assisted with machine imaging, proactive maintenance, and departmental
+              IT projects. Supported customer education initiatives to drive adoption of new IT systems.
+            </p>
+          </div>
+        </li>
+
+        <li class="xp__item">
+          <div class="xp__period">
+            <time datetime="2024">2024</time>
+            <span aria-hidden="true">–</span>
+            <time>Present</time>
+          </div>
+          <div class="xp__body">
+            <h3 class="xp__role">Athletic Operations Assistant</h3>
+            <p class="xp__org">University of Toledo Athletic Operations <span class="xp__loc">· Toledo, OH</span></p>
+            <p class="xp__desc">
+              Managed equipment storage, maintenance, and availability for student-athletes and coaches.
+              Assisted in setup and breakdown of stadiums and arenas for athletic events, maintaining
+              cleanliness and proper arrangement of facilities.
+            </p>
+          </div>
+        </li>
+
+        <li class="xp__item">
+          <div class="xp__period">
+            <time datetime="2024">2024</time>
+            <span aria-hidden="true">–</span>
+            <time>Present</time>
+          </div>
+          <div class="xp__body">
+            <h3 class="xp__role">Produce Associate</h3>
+            <p class="xp__org">Kroger <span class="xp__loc">· Toledo / Findlay, OH</span></p>
+            <p class="xp__desc">
+              Organized and stocked produce shelves with proper rotation for maximum visibility.
+              Stepped into leadership as needed, overseeing team members and ensuring smooth department
+              operations. Efficiently managed incoming shipments and inventory.
+            </p>
+          </div>
+        </li>
+
+        <li class="xp__item xp__item--award">
+          <div class="xp__period">
+            <time datetime="2024">2024</time>
+            <span aria-hidden="true">–</span>
+            <time>Present</time>
+          </div>
+          <div class="xp__body">
+            <h3 class="xp__role">"Reid Thomas Award" &mdash; Basketball</h3>
+            <p class="xp__org">Personal Recognition <span class="xp__loc">· Findlay, OH</span></p>
+            <p class="xp__desc">
+              Honored with a basketball team award named in my recognition, given annually to players
+              who demonstrate toughness, dependability, and selflessness.
+            </p>
+          </div>
+        </li>
+
+      </ol>
+    </section>
+
+    <!-- ─── Contact ─────────────────────────────────────────────── -->
+    <section class="section contact" id="contact" aria-labelledby="contact-heading">
+      <header class="section__head">
+        <span class="section__num" aria-hidden="true">04</span>
+        <h2 class="section__title" id="contact-heading">Get In Touch</h2>
+      </header>
+
+      <div class="contact__inner">
+        <p class="contact__lead">
+          I'm actively looking for internship and co-op opportunities. Whether you have a role
+          to discuss or just want to connect, my inbox is open.
+        </p>
+
+        <a href="mailto:reidcthomas.05@gmail.com" class="contact__email">
+          reidcthomas.05@gmail.com
+        </a>
+
+        <nav class="contact__links" aria-label="Social links">
+          <a
+            href="https://github.com/ReidThomas1827"
+            class="contact__social"
+            aria-label="GitHub profile"
+            target="_blank"
+            rel="noopener noreferrer"
+          >GitHub</a>
+          <a
+            href="https://linkedin.com/in/reidcthomas"
+            class="contact__social"
+            aria-label="LinkedIn profile"
+            target="_blank"
+            rel="noopener noreferrer"
+          >LinkedIn</a>
+        </nav>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ─── Footer ──────────────────────────────────────────────── -->
+  <footer class="site-footer" role="contentinfo">
+    <p>Designed &amp; built by Reid Thomas</p>
+    <p class="footer__sub">© <time id="footer-year"></time></p>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
