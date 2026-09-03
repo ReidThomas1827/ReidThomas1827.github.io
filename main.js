@@ -132,21 +132,6 @@ if (sections.length && navLinks.length && 'IntersectionObserver' in window) {
 
 /* ─── Reveal animations (respects prefers-reduced-motion) ────── */
 if (!prefersReducedMotion && 'IntersectionObserver' in window) {
-  const style = document.createElement('style');
-  style.textContent = `
-    .reveal {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.5s cubic-bezier(0.16,1,0.3,1),
-                  transform 0.5s cubic-bezier(0.16,1,0.3,1);
-    }
-    .reveal.is-visible {
-      opacity: 1;
-      transform: none;
-    }
-  `;
-  document.head.appendChild(style);
-
   // Add class to animatable elements
   const targets = document.querySelectorAll(
     '.section__head, .card, .xp__item, .about__bio, .about__skills, ' +
@@ -154,7 +139,7 @@ if (!prefersReducedMotion && 'IntersectionObserver' in window) {
   );
   targets.forEach((el, i) => {
     el.classList.add('reveal');
-    el.style.transitionDelay = `${(i % 4) * 60}ms`;
+    el.style.setProperty('--reveal-delay', `${(i % 4) * 55}ms`);
   });
 
   const revealObserver = new IntersectionObserver(
@@ -171,63 +156,28 @@ if (!prefersReducedMotion && 'IntersectionObserver' in window) {
   targets.forEach(el => revealObserver.observe(el));
 }
 
-/* ─── Hero cursor glow — lerped trail, desktop pointers only ── */
+/* ─── Restrained hero depth — desktop pointers only ─────────── */
 if (!prefersReducedMotion && finePointer && hero) {
-  const glow = document.createElement('div');
-  glow.className = 'hero__glow';
-  glow.setAttribute('aria-hidden', 'true');
-  hero.prepend(glow);
+  let frameId = 0;
+  let pointerX = 0;
+  let pointerY = 0;
 
-  let targetX = 0, targetY = 0, curX = 0, curY = 0;
-  let rafId = null;
-
-  const tick = () => {
-    curX += (targetX - curX) * 0.12;
-    curY += (targetY - curY) * 0.12;
-    glow.style.transform = `translate3d(${curX}px, ${curY}px, 0)`;
-    if (Math.abs(targetX - curX) > 0.5 || Math.abs(targetY - curY) > 0.5) {
-      rafId = requestAnimationFrame(tick);
-    } else {
-      rafId = null;
-    }
+  const renderDepth = () => {
+    hero.style.setProperty('--hero-x', pointerX.toFixed(3));
+    hero.style.setProperty('--hero-y', pointerY.toFixed(3));
+    frameId = 0;
   };
 
-  hero.addEventListener('pointermove', e => {
-    const rect = hero.getBoundingClientRect();
-    targetX = e.clientX - rect.left;
-    targetY = e.clientY - rect.top;
-    if (rafId === null) rafId = requestAnimationFrame(tick);
-  });
-  hero.addEventListener('pointerenter', e => {
-    const rect = hero.getBoundingClientRect();
-    curX = targetX = e.clientX - rect.left;
-    curY = targetY = e.clientY - rect.top;
-    glow.style.transform = `translate3d(${curX}px, ${curY}px, 0)`;
-    hero.classList.add('is-glowing');
-  });
+  hero.addEventListener('pointermove', event => {
+    const bounds = hero.getBoundingClientRect();
+    pointerX = ((event.clientX - bounds.left) / bounds.width - 0.5) * 2;
+    pointerY = ((event.clientY - bounds.top) / bounds.height - 0.5) * 2;
+    if (!frameId) frameId = requestAnimationFrame(renderDepth);
+  }, { passive: true });
+
   hero.addEventListener('pointerleave', () => {
-    hero.classList.remove('is-glowing');
-  });
-}
-
-/* ─── Magnetic hero CTAs — subtle pull toward the cursor ─────── */
-if (!prefersReducedMotion && finePointer) {
-  document.querySelectorAll('.hero__actions .btn').forEach(btn => {
-    const strength = 0.22;
-    const maxShift = 6;
-
-    btn.addEventListener('pointermove', e => {
-      const rect = btn.getBoundingClientRect();
-      const dx = e.clientX - (rect.left + rect.width / 2);
-      const dy = e.clientY - (rect.top + rect.height / 2);
-      const x = Math.max(-maxShift, Math.min(maxShift, dx * strength));
-      const y = Math.max(-maxShift, Math.min(maxShift, dy * strength));
-      btn.style.transition = 'transform 80ms linear';
-      btn.style.transform = `translate(${x}px, ${y}px)`;
-    });
-    btn.addEventListener('pointerleave', () => {
-      btn.style.transition = 'transform 300ms cubic-bezier(0.16, 1, 0.3, 1)';
-      btn.style.transform = '';
-    });
+    pointerX = 0;
+    pointerY = 0;
+    if (!frameId) frameId = requestAnimationFrame(renderDepth);
   });
 }
