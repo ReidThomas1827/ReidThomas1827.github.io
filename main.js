@@ -59,17 +59,15 @@ if (toggle && menu) {
   // Keep keyboard focus inside the full-screen mobile menu.
   document.addEventListener('keydown', event => {
     if (event.key !== 'Tab' || !isOpen() || !menuLinks.length) return;
-    const first = menuLinks[0];
-    const last = menuLinks[menuLinks.length - 1];
+    const focusable = [toggle, ...menuLinks];
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
     if (event.shiftKey && document.activeElement === first) {
       event.preventDefault();
-      toggle.focus();
-    } else if (!event.shiftKey && document.activeElement === toggle) {
-      event.preventDefault();
-      first.focus();
+      last.focus();
     } else if (!event.shiftKey && document.activeElement === last) {
       event.preventDefault();
-      toggle.focus();
+      first.focus();
     }
   });
 

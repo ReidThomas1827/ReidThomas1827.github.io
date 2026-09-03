@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +9,7 @@
   <meta property="og:description" content="Software, systems, and engineering work by Reid Thomas.">
   <meta property="og:type" content="website">
   <title>Reid Thomas — CS &amp; Engineering Technology</title>
+  <script>document.documentElement.classList.replace('no-js', 'js');</script>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,12 +21,13 @@
   <a href="#main" class="skip-link">Skip to main content</a>
 
   <!-- ─── Navigation ──────────────────────────────────────────── -->
-  <header class="site-header" role="banner">
+  <header class="site-header">
     <nav class="nav" aria-label="Primary navigation">
       <a href="#main" class="nav__logo" aria-label="Reid Thomas — home">RT</a>
 
       <button
         class="nav__toggle"
+        type="button"
         aria-expanded="false"
         aria-controls="nav-menu"
         aria-label="Open navigation menu"
@@ -34,7 +36,7 @@
         <span class="nav__bar" aria-hidden="true"></span>
       </button>
 
-      <ul class="nav__menu" id="nav-menu" role="list">
+      <ul class="nav__menu" id="nav-menu">
         <li><a href="#about"      class="nav__link">About</a></li>
         <li><a href="#work"       class="nav__link">Work</a></li>
         <li><a href="#experience" class="nav__link">Experience</a></li>
@@ -98,7 +100,7 @@
 
         <div class="about__skills">
           <h3 class="skills__heading">Skills &amp; Coursework</h3>
-          <ul class="skills__list" role="list">
+          <ul class="skills__list">
             <li class="skill">
               <span class="skill__cat">Languages</span>
               <span class="skill__items">Python · Assembly · Ladder Logic (PLC)</span>
@@ -141,7 +143,7 @@
             Emphasized logic development, system reliability, and process efficiency in real
             industrial control environments.
           </p>
-          <ul class="card__tech" role="list" aria-label="Technologies">
+          <ul class="card__tech">
             <li>PLC / Ladder Logic</li>
             <li>Industrial Networks</li>
             <li>Factory Control Systems</li>
@@ -160,7 +162,7 @@
             Built a functional calculator and implemented data analysis scripts, establishing
             a strong programming foundation.
           </p>
-          <ul class="card__tech" role="list" aria-label="Technologies">
+          <ul class="card__tech">
             <li>Python</li>
             <li>Data Structures</li>
             <li>Algorithms</li>
@@ -187,7 +189,7 @@
             processor organization, and assembly language. Built a practical foundation for
             reasoning about computers below the application layer.
           </p>
-          <ul class="card__tech" role="list" aria-label="Technologies">
+          <ul class="card__tech">
             <li>Assembly</li>
             <li>Digital Logic</li>
             <li>Computer Architecture</li>
@@ -204,7 +206,7 @@
         <h2 class="section__title" id="experience-heading">Experience</h2>
       </header>
 
-      <ol class="xp__list" role="list">
+      <ol class="xp__list">
 
         <li class="xp__item">
           <div class="xp__period">
@@ -315,7 +317,7 @@
   </main>
 
   <!-- ─── Footer ──────────────────────────────────────────────── -->
-  <footer class="site-footer" role="contentinfo">
+  <footer class="site-footer">
     <p>Designed &amp; built by Reid Thomas</p>
     <p class="footer__sub">© <time id="footer-year"></time></p>
   </footer>

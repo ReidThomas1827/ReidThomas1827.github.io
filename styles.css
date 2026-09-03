@@ -253,6 +253,23 @@ ul, ol { list-style: none; }
   }
   .nav__link::after { display: none; }
 
+  .no-js .nav__toggle { display: none; }
+  .no-js .nav__menu {
+    position: static;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: var(--sp-3);
+    background: transparent;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  .no-js .nav__link {
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+  }
+
   /* Animate bars into × */
   .nav__toggle[aria-expanded="true"] .nav__bar:first-child {
     transform: translateY(6.5px) rotate(45deg);
