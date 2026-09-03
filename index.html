@@ -86,11 +86,11 @@
           </a>
         </div>
       </div>
-      <aside class="hero__index" aria-hidden="true">
+      <div class="hero__index" aria-hidden="true">
         <span>01</span>
         <span>Portfolio</span>
         <time id="portfolio-year"></time>
-      </aside>
+      </div>
       <div class="hero__scroll" aria-hidden="true">
         <span>Scroll to explore</span>
         <i></i>
@@ -251,11 +251,13 @@
       <header class="section__head">
         <span class="section__num" aria-hidden="true">03</span>
         <h2 class="section__title" id="experience-heading">Experience</h2>
+        <span class="section__meta" aria-hidden="true">TIMELINE / 04 ENTRIES</span>
       </header>
 
       <ol class="xp__list">
 
         <li class="xp__item">
+          <span class="xp__index" aria-hidden="true">E.01</span>
           <div class="xp__period">
             <time datetime="2025">2025</time>
             <span aria-hidden="true">–</span>
@@ -273,6 +275,7 @@
         </li>
 
         <li class="xp__item">
+          <span class="xp__index" aria-hidden="true">E.02</span>
           <div class="xp__period">
             <time datetime="2024">2024</time>
             <span aria-hidden="true">–</span>
@@ -290,6 +293,7 @@
         </li>
 
         <li class="xp__item">
+          <span class="xp__index" aria-hidden="true">E.03</span>
           <div class="xp__period">
             <time datetime="2024">2024</time>
             <span aria-hidden="true">–</span>
@@ -307,6 +311,7 @@
         </li>
 
         <li class="xp__item xp__item--award">
+          <span class="xp__index" aria-hidden="true">E.04</span>
           <div class="xp__period">
             <time datetime="2024">2024</time>
             <span aria-hidden="true">–</span>
@@ -330,34 +335,41 @@
       <header class="section__head">
         <span class="section__num" aria-hidden="true">04</span>
         <h2 class="section__title" id="contact-heading">Get In Touch</h2>
+        <span class="section__meta" aria-hidden="true">CHANNEL / OPEN</span>
       </header>
 
       <div class="contact__inner">
-        <p class="contact__lead">
-          I'm actively looking for internship and co-op opportunities. Whether you have a role
-          to discuss or just want to connect, my inbox is open.
-        </p>
+        <div class="contact__intro">
+          <span class="contact__status" aria-hidden="true"><i></i>Available for internships + co-ops</span>
+          <p class="contact__lead">
+            I'm actively looking for internship and co-op opportunities. Whether you have a role
+            to discuss or just want to connect, my inbox is open.
+          </p>
+        </div>
 
-        <a href="mailto:reidcthomas.05@gmail.com" class="contact__email">
-          reidcthomas.05@gmail.com
-        </a>
+        <div class="contact__action">
+          <span class="contact__label" aria-hidden="true">START A CONVERSATION / 01</span>
+          <a href="mailto:reidcthomas.05@gmail.com" class="contact__email">
+            reidcthomas.05@gmail.com <span aria-hidden="true">↗</span>
+          </a>
 
-        <nav class="contact__links" aria-label="Social links">
-          <a
-            href="https://github.com/ReidThomas1827"
-            class="contact__social"
-            aria-label="GitHub profile"
-            target="_blank"
-            rel="noopener noreferrer"
-          >GitHub</a>
-          <a
-            href="https://linkedin.com/in/reidcthomas"
-            class="contact__social"
-            aria-label="LinkedIn profile"
-            target="_blank"
-            rel="noopener noreferrer"
-          >LinkedIn</a>
-        </nav>
+          <nav class="contact__links" aria-label="Social links">
+            <a
+              href="https://github.com/ReidThomas1827"
+              class="contact__social"
+              aria-label="GitHub profile"
+              target="_blank"
+              rel="noopener noreferrer"
+            ><span>GitHub</span><span aria-hidden="true">↗</span></a>
+            <a
+              href="https://linkedin.com/in/reidcthomas"
+              class="contact__social"
+              aria-label="LinkedIn profile"
+              target="_blank"
+              rel="noopener noreferrer"
+            ><span>LinkedIn</span><span aria-hidden="true">↗</span></a>
+          </nav>
+        </div>
       </div>
     </section>
 
@@ -366,8 +378,10 @@
   <!-- ─── Footer ──────────────────────────────────────────────── -->
   <footer class="site-footer">
     <p>Designed &amp; built by Reid Thomas</p>
-    <p class="footer__sub">© <time id="footer-year"></time></p>
+    <p class="footer__sub">© <time id="footer-year"></time> / Toledo, Ohio</p>
+    <a class="footer__top" href="#main">Back to top <span aria-hidden="true">↑</span></a>
   </footer>
+
 
   <script src="main.js"></script>
 </body>
