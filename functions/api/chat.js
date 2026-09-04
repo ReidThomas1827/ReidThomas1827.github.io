@@ -1,5 +1,7 @@
 const MODEL = "@cf/meta/llama-3.1-8b-instruct-fast";
 
+// Keep these public facts synchronized with index.html. The publishing
+// checklist in README.md names both files so content changes are reviewed once.
 const PORTFOLIO_CONTEXT = `
 Reid Thomas is a Computer Science & Engineering Technology student at the University of Toledo.
 He is pursuing a minor in Business Administration and expects to graduate in December 2027.
@@ -34,7 +36,7 @@ Contact:
 
 const SYSTEM_PROMPT = `You are the portfolio assistant for Reid Thomas.
 Answer questions using only the verified portfolio context below. Refer to Reid in the third person.
-Keep answers concise, warm, and useful to recruiters: usually two to four sentences.
+Keep answers concise, warm, and useful to recruiters: usually two to four complete sentences.
 Never invent employers, dates, accomplishments, technologies, links, or personal details.
 If the context does not contain the answer, say that the portfolio does not specify it and suggest contacting Reid.
 If a question is unrelated to Reid's portfolio, politely explain that you can only answer questions about Reid's skills, work, education, experience, availability, or contact information.
@@ -141,9 +143,15 @@ export async function onRequestPost({ request, env }) {
   }
 
   try {
+    // Only the latest user question is sent to the model. Client-supplied
+    // "assistant" turns are never forwarded, so a scripted caller cannot inject
+    // fabricated history and the answer is grounded solely in SYSTEM_PROMPT.
     const result = await env.AI.run(MODEL, {
-      messages: [{ role: "system", content: SYSTEM_PROMPT }, ...messages],
-      max_tokens: 260,
+      messages: [
+        { role: "system", content: SYSTEM_PROMPT },
+        { role: "user", content: latestQuestion },
+      ],
+      max_tokens: 320,
       temperature: 0.2,
     });
 

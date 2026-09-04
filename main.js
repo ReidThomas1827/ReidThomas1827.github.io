@@ -164,10 +164,6 @@ if (systemVisual) {
     phaseLabel.textContent = next.phase;
     logLabel.textContent = next.log;
     progressBar.style.setProperty("--system-progress", `${next.progress}%`);
-    progressBar.parentElement.style.setProperty(
-      "--system-progress",
-      `${next.progress}%`,
-    );
     percentLabel.textContent = `${next.progress}%`;
   };
   const startStates = () => {
@@ -280,9 +276,11 @@ if (workflow) {
     ).observe(workflow);
 }
 
-/* Local, zero-network lab interaction */
+/* Local, zero-network lab interaction. Decorative: responds to mouse and
+   touch (the passive listener never blocks scroll) and is hidden from
+   assistive tech, so it is not presented as an operable control. */
 const signalCard = document.querySelector("[data-signal-field]");
-if (signalCard && finePointer.matches && !reducedMotion.matches) {
+if (signalCard && !reducedMotion.matches) {
   const field = signalCard.querySelector(".signal-field");
   const xLabel = signalCard.querySelector("[data-signal-x]");
   const yLabel = signalCard.querySelector("[data-signal-y]");
@@ -319,8 +317,18 @@ const commandStatus = document.getElementById("command-status");
 const paletteButtons = palette
   ? [...palette.querySelectorAll("[data-command]")]
   : [];
+const paletteBackground = [
+  document.querySelector(".site-header"),
+  document.querySelector("main"),
+  document.querySelector(".site-footer"),
+  document.querySelector("[data-chat-widget]"),
+].filter(Boolean);
 let selectedCommand = 0;
 let commandReturnTarget = null;
+
+const setPaletteBackgroundInert = (inert) => {
+  paletteBackground.forEach((element) => (element.inert = inert));
+};
 
 const visibleCommands = () => paletteButtons.filter((button) => !button.hidden);
 const selectCommand = (index) => {
@@ -347,15 +355,21 @@ const closePalette = () => {
   if (!palette || palette.hidden) return;
   palette.hidden = true;
   document.body.style.overflow = "";
+  setPaletteBackgroundInert(false);
   paletteInput?.setAttribute("aria-expanded", "false");
   paletteInput?.removeAttribute("aria-activedescendant");
   commandReturnTarget?.focus();
 };
 const openPalette = (trigger) => {
   if (!palette) return;
-  commandReturnTarget = trigger || document.activeElement;
+  const requestedReturnTarget = trigger || document.activeElement;
+  window.dispatchEvent(new CustomEvent("portfolio:close-chat"));
+  commandReturnTarget = requestedReturnTarget?.closest?.(".chat-panel")
+    ? document.querySelector(".chat-launcher")
+    : requestedReturnTarget;
   palette.hidden = false;
   document.body.style.overflow = "hidden";
+  setPaletteBackgroundInert(true);
   paletteInput.setAttribute("aria-expanded", "true");
   paletteInput.value = "";
   paletteButtons.forEach((button) => (button.hidden = false));
@@ -502,7 +516,15 @@ const updateTime = () => {
   localTime.dateTime = now.toISOString();
 };
 updateTime();
-window.setInterval(updateTime, 1000);
+let timeTimer = window.setInterval(updateTime, 1000);
+document.addEventListener("visibilitychange", () => {
+  window.clearInterval(timeTimer);
+  timeTimer = 0;
+  if (!document.hidden) {
+    updateTime();
+    timeTimer = window.setInterval(updateTime, 1000);
+  }
+});
 
 console.info(
   "%c RT / SYSTEM ONLINE ",

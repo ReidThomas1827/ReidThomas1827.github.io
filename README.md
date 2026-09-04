@@ -54,4 +54,6 @@ This applies to `*.pages.dev` and any custom domain. For stronger protection, ad
 
 Confirm the email address, GitHub and LinkedIn URLs, GPA, graduation date, current roles, and internship availability. The canonical, OpenGraph, structured-data, sitemap, and robots metadata all point at the primary production domain `https://reid-portfolio.pages.dev/` (Cloudflare Pages, where the assistant runs). If the primary domain changes, update `index.html` (canonical, `og:url`, `og:image`, `twitter:image`, JSON-LD `url`), `sitemap.xml`, and `robots.txt` together. The GitHub Pages copy is a static mirror where the assistant shows its offline fallback.
 
+Portfolio facts have two public representations: the visible copy in `index.html` and the assistant grounding context in `functions/api/chat.js`. Update and review both whenever education, projects, experience, availability, or contact details change.
+
 Project visuals are illustrative interface compositions based on the verified coursework. Replace them with real project screenshots if those become available, and add direct repository/demo links where appropriate.

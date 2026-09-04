@@ -3269,7 +3269,12 @@ button.text-link {
     font-size: clamp(3.7rem, 18vw, 7rem);
   }
   .contact__content .eyebrow span:last-child {
-    display: none;
+    display: flex;
+  }
+  .contact__content .eyebrow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
   }
   .contact__email {
     font-size: clamp(11px, 3.6vw, 16px);

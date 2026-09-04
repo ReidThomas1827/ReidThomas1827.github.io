@@ -12,15 +12,32 @@ if (chatWidget) {
   const input = chatWidget.querySelector("#chat-input");
   const sendButton = chatWidget.querySelector(".chat-form__send");
   const status = chatWidget.querySelector(".chat-status");
+  const chatBackground = [
+    document.querySelector(".site-header"),
+    document.querySelector("main"),
+    document.querySelector(".site-footer"),
+    document.querySelector("[data-command-palette]"),
+  ].filter(Boolean);
   const conversation = [];
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   let requestInFlight = false;
 
+  let chatReturnTarget = null;
   const setOpen = (open) => {
+    if (open) {
+      // Remember whatever opened the panel (launcher, lab card, or command
+      // palette) so focus returns there on close, not always to the launcher.
+      const active = document.activeElement;
+      chatReturnTarget =
+        active && active !== document.body && !panel.contains(active)
+          ? active
+          : launcher;
+    }
     chatWidget.classList.toggle("chat-widget--open", open);
     launcher.setAttribute("aria-expanded", String(open));
     panel.setAttribute("aria-hidden", String(!open));
     panel.inert = !open;
+    chatBackground.forEach((element) => (element.inert = open));
     document.body.classList.toggle(
       "chat-is-open",
       open && window.innerWidth <= 430,
@@ -29,7 +46,11 @@ if (chatWidget) {
     if (open) {
       window.requestAnimationFrame(() => input.focus());
     } else {
-      launcher.focus();
+      const target =
+        chatReturnTarget && chatReturnTarget.isConnected
+          ? chatReturnTarget
+          : launcher;
+      target.focus();
     }
   };
 
@@ -135,6 +156,9 @@ if (chatWidget) {
   launcher.addEventListener("click", () => setOpen(true));
   closeButton.addEventListener("click", () => setOpen(false));
   window.addEventListener("portfolio:open-chat", () => setOpen(true));
+  window.addEventListener("portfolio:close-chat", () => {
+    if (chatWidget.classList.contains("chat-widget--open")) setOpen(false);
+  });
 
   suggestions.addEventListener("click", (event) => {
     const button = event.target.closest("[data-question]");

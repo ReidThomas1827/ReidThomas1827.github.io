@@ -10,3 +10,4 @@ qa-audit.cjs
 # Committed OG share image (exception to *.png)
 !og-image.png
 qa-review.cjs
+qa-*.cjs
