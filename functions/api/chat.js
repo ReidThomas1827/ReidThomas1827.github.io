@@ -23,7 +23,7 @@ Independent projects:
 
 Portfolio systems:
 - This website includes a Cloudflare Workers AI assistant grounded in verified portfolio content.
-- The portfolio presents an AI-assisted build workflow as a clearly labeled process visualization, not as live telemetry.
+- The portfolio includes clearly labeled interface visualizations and experiments; they are illustrative, not live telemetry.
 
 Experience:
 - IT Consultant, University of Toledo Engineering College Computing (2025–present): desktop and printer troubleshooting, machine imaging, maintenance, departmental IT projects, and customer education.

@@ -149,6 +149,91 @@ if (reducedMotion.matches || !("IntersectionObserver" in window)) {
 }
 document.documentElement.classList.add("js-ready");
 
+/* Project context filter. All work remains visible without JavaScript. */
+const projectFilters = document.querySelector("[data-project-filters]");
+let applyProjectFilter = null;
+if (projectFilters) {
+  const filterButtons = [
+    ...projectFilters.querySelectorAll("[data-project-filter]"),
+  ];
+  const projects = [...document.querySelectorAll("[data-project-context]")];
+  const filterStatus = projectFilters.querySelector(
+    "[data-project-filter-status]",
+  );
+
+  const validFilters = new Set(["all", "independent", "coursework"]);
+  filterButtons.forEach((button) => {
+    const filter = button.dataset.projectFilter;
+    const count = projects.filter(
+      (project) =>
+        filter === "all" || project.dataset.projectContext === filter,
+    ).length;
+    const countLabel = button.querySelector("span");
+    if (countLabel) countLabel.textContent = String(count).padStart(2, "0");
+  });
+  const setProjectFilter = (
+    filter,
+    { updateUrl = false, animate = false } = {},
+  ) => {
+    const safeFilter = validFilters.has(filter) ? filter : "all";
+    let visibleCount = 0;
+    filterButtons.forEach((button) =>
+      button.setAttribute(
+        "aria-pressed",
+        String(button.dataset.projectFilter === safeFilter),
+      ),
+    );
+    projects.forEach((project) => {
+      const visible =
+        safeFilter === "all" || project.dataset.projectContext === safeFilter;
+      project.hidden = !visible;
+      project.classList.remove("project-filter-enter");
+      if (!visible) return;
+      visibleCount += 1;
+      if (
+        animate &&
+        !reducedMotion.matches &&
+        !document.documentElement.classList.contains("motion-paused")
+      ) {
+        window.requestAnimationFrame(() =>
+          project.classList.add("project-filter-enter"),
+        );
+      }
+    });
+    if (filterStatus) {
+      const label =
+        safeFilter === "coursework" ? "coursework" : `${safeFilter} work`;
+      filterStatus.textContent = `Showing ${visibleCount} items: ${label}.`;
+    }
+    if (updateUrl) {
+      const url = new URL(window.location.href);
+      if (safeFilter === "all") url.searchParams.delete("work");
+      else url.searchParams.set("work", safeFilter);
+      window.history.pushState({ work: safeFilter }, "", url);
+    }
+  };
+  applyProjectFilter = setProjectFilter;
+
+  filterButtons.forEach((button) =>
+    button.addEventListener("click", () =>
+      setProjectFilter(button.dataset.projectFilter, {
+        updateUrl: true,
+        animate: true,
+      }),
+    ),
+  );
+  const requestedFilter = new URLSearchParams(window.location.search).get(
+    "work",
+  );
+  setProjectFilter(requestedFilter || "all");
+  window.addEventListener("popstate", () => {
+    const restoredFilter = new URLSearchParams(window.location.search).get(
+      "work",
+    );
+    setProjectFilter(restoredFilter || "all", { animate: true });
+  });
+}
+
 const observedSections = [...document.querySelectorAll("main section[id]")];
 if ("IntersectionObserver" in window) {
   const sectionObserver = new IntersectionObserver(
@@ -241,12 +326,29 @@ if (systemVisual) {
   document.addEventListener("portfolio:motion-toggle", (event) =>
     event.detail?.paused ? stopStates() : startStates(),
   );
+  reducedMotion.addEventListener?.("change", (event) => {
+    if (event.matches) {
+      stopStates();
+      stateIndex = states.length - 1;
+      renderState(stateIndex);
+    } else if (
+      systemInView &&
+      !document.documentElement.classList.contains("motion-paused")
+    ) {
+      startStates();
+    }
+  });
 
   if (!reducedMotion.matches && finePointer.matches) {
     let visualFrame = 0;
     systemVisual.addEventListener(
       "pointermove",
       (event) => {
+        if (
+          reducedMotion.matches ||
+          document.documentElement.classList.contains("motion-paused")
+        )
+          return;
         if (visualFrame) return;
         visualFrame = window.requestAnimationFrame(() => {
           const bounds = systemVisual.getBoundingClientRect();
@@ -278,6 +380,8 @@ if (!reducedMotion.matches && finePointer.matches) {
     project.addEventListener(
       "pointermove",
       (event) => {
+        if (document.documentElement.classList.contains("motion-paused"))
+          return;
         if (tiltFrame) return;
         tiltFrame = window.requestAnimationFrame(() => {
           const bounds = visual.getBoundingClientRect();
@@ -323,7 +427,10 @@ if (!reducedMotion.matches && finePointer.matches) {
     button.addEventListener(
       "pointermove",
       (event) => {
-        if (magFrame || document.documentElement.classList.contains("motion-paused"))
+        if (
+          magFrame ||
+          document.documentElement.classList.contains("motion-paused")
+        )
           return;
         magFrame = window.requestAnimationFrame(() => {
           const b = button.getBoundingClientRect();
@@ -356,6 +463,7 @@ if (signalCard && !reducedMotion.matches) {
   field.addEventListener(
     "pointermove",
     (event) => {
+      if (document.documentElement.classList.contains("motion-paused")) return;
       if (signalFrame) return;
       signalFrame = window.requestAnimationFrame(() => {
         const bounds = field.getBoundingClientRect();
@@ -382,6 +490,7 @@ if (signalCard && !reducedMotion.matches) {
 const palette = document.querySelector("[data-command-palette]");
 const paletteInput = document.getElementById("command-input");
 const commandStatus = document.getElementById("command-status");
+const commandEmpty = palette?.querySelector("[data-command-empty]");
 const paletteButtons = palette
   ? [...palette.querySelectorAll("[data-command]")]
   : [];
@@ -441,6 +550,7 @@ const openPalette = (trigger) => {
   paletteInput.setAttribute("aria-expanded", "true");
   paletteInput.value = "";
   paletteButtons.forEach((button) => (button.hidden = false));
+  if (commandEmpty) commandEmpty.hidden = true;
   selectedCommand = 0;
   selectCommand(0);
   window.requestAnimationFrame(() => paletteInput.focus());
@@ -451,11 +561,26 @@ const runCommand = (button) => {
   closePalette();
   if (action === "chat")
     window.dispatchEvent(new CustomEvent("portfolio:open-chat"));
-  else if (action.startsWith("#"))
+  else if (action === "copy-email")
+    document.querySelector("[data-copy-email]")?.click();
+  else if (action === "copy-link")
+    copyText(window.location.href)
+      .then(() => showToast("Current portfolio link copied."))
+      .catch(() => showToast("Copy unavailable — use the browser address."));
+  else if (action === "motion")
+    document.querySelector("[data-motion-toggle]")?.click();
+  else if (action.startsWith("#")) {
+    if (action.startsWith("#project-")) {
+      applyProjectFilter?.("all");
+    }
+    const targetUrl = new URL(window.location.href);
+    if (action.startsWith("#project-")) targetUrl.searchParams.delete("work");
+    targetUrl.hash = action;
+    window.history.pushState(null, "", targetUrl);
     document
       .querySelector(action)
       ?.scrollIntoView({ behavior: reducedMotion.matches ? "auto" : "smooth" });
-  else if (action.startsWith("http"))
+  } else if (action.startsWith("http"))
     window.open(action, "_blank", "noopener,noreferrer");
   else window.location.href = action;
 };
@@ -483,6 +608,7 @@ paletteInput?.addEventListener("input", () => {
     (button) =>
       (button.hidden = !button.textContent.toLowerCase().includes(query)),
   );
+  if (commandEmpty) commandEmpty.hidden = visibleCommands().length > 0;
   selectedCommand = 0;
   selectCommand(0);
 });
@@ -570,6 +696,87 @@ if (cursor && finePointer.matches && !reducedMotion.matches) {
   );
 }
 
+const siteToast = document.querySelector("[data-site-toast]");
+let toastTimer = 0;
+let toastHideTimer = 0;
+const showToast = (message) => {
+  if (!siteToast) return;
+  window.clearTimeout(toastTimer);
+  window.clearTimeout(toastHideTimer);
+  siteToast.textContent = message;
+  siteToast.hidden = false;
+  window.requestAnimationFrame(() => siteToast.classList.add("is-visible"));
+  toastTimer = window.setTimeout(() => {
+    siteToast.classList.remove("is-visible");
+    toastHideTimer = window.setTimeout(
+      () => (siteToast.hidden = true),
+      reducedMotion.matches ? 0 : 300,
+    );
+  }, 2200);
+};
+const copyText = async (value) => {
+  if (navigator.clipboard && window.isSecureContext) {
+    await navigator.clipboard.writeText(value);
+    return;
+  }
+  const field = document.createElement("textarea");
+  field.value = value;
+  field.setAttribute("readonly", "");
+  field.style.position = "fixed";
+  field.style.opacity = "0";
+  document.body.appendChild(field);
+  field.select();
+  const copied = document.execCommand("copy");
+  field.remove();
+  if (!copied) throw new Error("Copy command unavailable");
+};
+
+document.querySelectorAll("[data-copy-project]").forEach((button) => {
+  button.addEventListener("click", async () => {
+    const project = button.closest("[data-project]");
+    const projectName = project?.querySelector("h3")?.textContent.trim();
+    const url = new URL(window.location.href);
+    url.searchParams.delete("work");
+    url.hash = button.dataset.copyProject;
+    try {
+      await copyText(url.href);
+      showToast(`${projectName || "Project"} link copied.`);
+    } catch {
+      showToast("Copy unavailable — use the browser address.");
+    }
+  });
+});
+
+/* Contact utility with a secure-context Clipboard API path and a small
+   compatibility fallback for local/static previews. */
+const copyEmailButton = document.querySelector("[data-copy-email]");
+const copyEmailStatus = document.querySelector("[data-copy-email-status]");
+if (copyEmailButton) {
+  let copyResetTimer = 0;
+  copyEmailButton.addEventListener("click", async () => {
+    const email = copyEmailButton.dataset.copyEmail;
+    try {
+      await copyText(email);
+      window.clearTimeout(copyResetTimer);
+      copyEmailButton.textContent = "Copied";
+      copyEmailButton.classList.add("is-copied");
+      if (copyEmailStatus)
+        copyEmailStatus.textContent = "Email address copied to clipboard.";
+      showToast("Email address copied.");
+      copyResetTimer = window.setTimeout(() => {
+        copyEmailButton.textContent = "Copy email";
+        copyEmailButton.classList.remove("is-copied");
+      }, 2400);
+    } catch {
+      if (copyEmailStatus) {
+        copyEmailStatus.textContent =
+          "Copy was unavailable. The email link remains available.";
+      }
+      showToast("Copy unavailable — use the email link.");
+    }
+  });
+}
+
 /* Dynamic footer time is real local client time */
 const localTime = document.querySelector("[data-local-time]");
 const updateTime = () => {
@@ -596,19 +803,37 @@ document.addEventListener("visibilitychange", () => {
 
 const motionToggle = document.querySelector("[data-motion-toggle]");
 if (motionToggle) {
-  const setMotionPaused = (paused) => {
+  const motionCommand = document.querySelector("[data-motion-command]");
+  const setMotionPaused = (paused, { announce = false } = {}) => {
     document.documentElement.classList.toggle("motion-paused", paused);
     motionToggle.setAttribute("aria-pressed", String(paused));
     motionToggle.textContent = paused ? "Resume motion" : "Pause motion";
+    if (motionCommand)
+      motionCommand.textContent = paused ? "Resume motion" : "Pause motion";
+    try {
+      window.localStorage.setItem("portfolio-motion-paused", String(paused));
+    } catch {
+      // Storage can be unavailable in private or restricted browsing modes.
+    }
     document.dispatchEvent(
       new CustomEvent("portfolio:motion-toggle", { detail: { paused } }),
     );
+    if (announce) showToast(paused ? "Motion paused." : "Motion resumed.");
   };
   motionToggle.addEventListener("click", () =>
     setMotionPaused(
       !document.documentElement.classList.contains("motion-paused"),
+      { announce: true },
     ),
   );
+  let savedMotionPaused = false;
+  try {
+    savedMotionPaused =
+      window.localStorage.getItem("portfolio-motion-paused") === "true";
+  } catch {
+    // Keep the default when preference storage is unavailable.
+  }
+  setMotionPaused(savedMotionPaused);
 }
 
 console.info(

@@ -13,14 +13,14 @@ if (chatWidget) {
   const sendButton = chatWidget.querySelector(".chat-form__send");
   const status = chatWidget.querySelector(".chat-status");
   const isStaticMirror = /\.github\.io$/i.test(window.location.hostname);
-  const primaryAssistantUrl = "https://reid-portfolio.pages.dev/#contact";
+  const primaryAssistantUrl =
+    "https://reid-portfolio.pages.dev/?assistant=open";
   const chatBackground = [
     document.querySelector(".site-header"),
     document.querySelector("main"),
     document.querySelector(".site-footer"),
     document.querySelector("[data-command-palette]"),
   ].filter(Boolean);
-  const conversation = [];
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   let requestInFlight = false;
 
@@ -109,7 +109,6 @@ if (chatWidget) {
     if (!trimmed || requestInFlight) return;
 
     addMessage("user", trimmed);
-    conversation.push({ role: "user", content: trimmed });
     suggestions.hidden = true;
     input.value = "";
     input.style.height = "";
@@ -143,14 +142,8 @@ if (chatWidget) {
 
       typing.remove();
       addMessage("assistant", data.answer, data.section);
-      conversation.push({ role: "assistant", content: data.answer });
     } catch (error) {
       typing.remove();
-      // Roll back the unanswered user turn so history stays alternating and
-      // the next question doesn't send two consecutive user roles (400).
-      if (conversation[conversation.length - 1]?.role === "user") {
-        conversation.pop();
-      }
       const message =
         error.name === "AbortError"
           ? "That took too long. Please try the question again."
@@ -175,6 +168,15 @@ if (chatWidget) {
   window.addEventListener("portfolio:close-chat", () => {
     if (chatWidget.classList.contains("chat-widget--open")) setOpen(false);
   });
+  if (new URLSearchParams(window.location.search).get("assistant") === "open") {
+    setOpen(true);
+    if (!isStaticMirror) {
+      const cleanUrl = new URL(window.location.href);
+      cleanUrl.searchParams.delete("assistant");
+      window.history.replaceState(null, "", cleanUrl);
+      window.setTimeout(() => input.focus({ preventScroll: true }), 0);
+    }
+  }
 
   suggestions.addEventListener("click", (event) => {
     const button = event.target.closest("[data-question]");

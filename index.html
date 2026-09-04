@@ -84,7 +84,11 @@
 
     <header class="site-header" data-header>
       <nav class="nav shell" aria-label="Primary navigation">
-        <a class="nav__brand" href="#home" data-cursor="HOME"
+        <a
+          class="nav__brand"
+          href="#home"
+          data-cursor="HOME"
+          aria-label="Reid Thomas — home"
           ><span class="nav__mark" aria-hidden="true">RT</span
           ><span class="nav__identity"
             ><b>Reid Thomas</b><small>Systems / Software</small></span
@@ -373,7 +377,7 @@
             </dd>
           </div>
         </dl>
-        <aside class="recognition" data-reveal aria-label="Recognition">
+        <div class="recognition" data-reveal aria-label="Recognition">
           <p class="eyebrow">
             <span>Recognition</span><span>Basketball / Findlay</span>
           </p>
@@ -381,7 +385,7 @@
             <strong>The Reid Thomas Award</strong> is presented annually to a
             player who demonstrates toughness, dependability, and selflessness.
           </p>
-        </aside>
+        </div>
       </section>
 
       <section
@@ -402,8 +406,49 @@
               context so the evidence is clear and the claims stay honest.
             </p>
           </header>
-          <div class="project-list">
-            <article class="project" data-project data-reveal>
+          <div class="project-filters" data-project-filters data-reveal>
+            <p id="project-filter-label">Filter work</p>
+            <div
+              role="group"
+              aria-labelledby="project-filter-label"
+              aria-controls="project-list"
+            >
+              <button
+                type="button"
+                data-project-filter="all"
+                aria-pressed="true"
+              >
+                All <span>04</span>
+              </button>
+              <button
+                type="button"
+                data-project-filter="independent"
+                aria-pressed="false"
+              >
+                Independent <span>03</span>
+              </button>
+              <button
+                type="button"
+                data-project-filter="coursework"
+                aria-pressed="false"
+              >
+                Coursework <span>01</span>
+              </button>
+            </div>
+            <p
+              class="visually-hidden"
+              data-project-filter-status
+              aria-live="polite"
+            ></p>
+          </div>
+          <div class="project-list" id="project-list">
+            <article
+              id="project-forge"
+              class="project"
+              data-project
+              data-project-context="independent"
+              data-reveal
+            >
               <div
                 class="project__visual project__visual--forge"
                 role="img"
@@ -479,17 +524,32 @@
                   <li>Mobile UI</li>
                   <li>Progress Tracking</li>
                 </ul>
-                <a
-                  class="text-link"
-                  href="https://github.com/ReidThomas1827/forge"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  data-cursor="OPEN"
-                  >View source <span aria-hidden="true">↗</span></a
-                >
+                <div class="project__actions">
+                  <a
+                    class="text-link"
+                    href="https://github.com/ReidThomas1827/forge"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-cursor="OPEN"
+                    >View source <span aria-hidden="true">↗</span></a
+                  >
+                  <button
+                    class="text-link text-link--button"
+                    type="button"
+                    data-copy-project="#project-forge"
+                  >
+                    Copy link <span aria-hidden="true">⧉</span>
+                  </button>
+                </div>
               </div>
             </article>
-            <article class="project project--reverse" data-project data-reveal>
+            <article
+              id="project-sermon-notes"
+              class="project project--reverse"
+              data-project
+              data-project-context="independent"
+              data-reveal
+            >
               <div
                 class="project__visual project__visual--sermon"
                 role="img"
@@ -568,17 +628,32 @@
                   <li>IndexedDB</li>
                   <li>Offline-first</li>
                 </ul>
-                <a
-                  class="text-link"
-                  href="https://github.com/ReidThomas1827/Churchapp/tree/main/sermonapp"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  data-cursor="OPEN"
-                  >View source <span aria-hidden="true">↗</span></a
-                >
+                <div class="project__actions">
+                  <a
+                    class="text-link"
+                    href="https://github.com/ReidThomas1827/Churchapp/tree/main/sermonapp"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-cursor="OPEN"
+                    >View source <span aria-hidden="true">↗</span></a
+                  >
+                  <button
+                    class="text-link text-link--button"
+                    type="button"
+                    data-copy-project="#project-sermon-notes"
+                  >
+                    Copy link <span aria-hidden="true">⧉</span>
+                  </button>
+                </div>
               </div>
             </article>
-            <article class="project" data-project data-reveal>
+            <article
+              id="project-plc"
+              class="project"
+              data-project
+              data-project-context="coursework"
+              data-reveal
+            >
               <div
                 class="project__visual project__visual--plc"
                 role="img"
@@ -654,9 +729,24 @@
                   <li>Industrial Networks</li>
                   <li>Factory Control</li>
                 </ul>
+                <div class="project__actions">
+                  <button
+                    class="text-link text-link--button"
+                    type="button"
+                    data-copy-project="#project-plc"
+                  >
+                    Copy link <span aria-hidden="true">⧉</span>
+                  </button>
+                </div>
               </div>
             </article>
-            <article class="project project--reverse" data-project data-reveal>
+            <article
+              id="project-seamless"
+              class="project project--reverse"
+              data-project
+              data-project-context="independent"
+              data-reveal
+            >
               <div
                 class="project__visual project__visual--seamless"
                 role="img"
@@ -730,14 +820,23 @@
                   <li>AI Vision</li>
                   <li>Cloudflare D1</li>
                 </ul>
-                <a
-                  class="text-link"
-                  href="https://github.com/ReidThomas1827/Seamless"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  data-cursor="OPEN"
-                  >View source <span aria-hidden="true">↗</span></a
-                >
+                <div class="project__actions">
+                  <a
+                    class="text-link"
+                    href="https://github.com/ReidThomas1827/Seamless"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-cursor="OPEN"
+                    >View source <span aria-hidden="true">↗</span></a
+                  >
+                  <button
+                    class="text-link text-link--button"
+                    type="button"
+                    data-copy-project="#project-seamless"
+                  >
+                    Copy link <span aria-hidden="true">⧉</span>
+                  </button>
+                </div>
               </div>
             </article>
           </div>
@@ -967,12 +1066,29 @@
             I’m looking for opportunities to learn from strong teams and
             contribute across software, systems, and technical operations.
           </p>
-          <a
-            class="contact__email"
-            href="mailto:reidcthomas.05@gmail.com"
-            data-cursor="MAIL"
-            ><span>reidcthomas.05@gmail.com</span><i aria-hidden="true">↗</i></a
-          >
+          <div class="contact__actions">
+            <a
+              class="contact__email"
+              href="mailto:reidcthomas.05@gmail.com"
+              data-cursor="MAIL"
+              ><span>reidcthomas.05@gmail.com</span
+              ><i aria-hidden="true">↗</i></a
+            >
+            <button
+              class="contact__copy"
+              type="button"
+              data-copy-email="reidcthomas.05@gmail.com"
+              aria-describedby="copy-email-status"
+            >
+              Copy email
+            </button>
+            <span
+              class="visually-hidden"
+              id="copy-email-status"
+              data-copy-email-status
+              aria-live="polite"
+            ></span>
+          </div>
         </div>
       </section>
     </main>
@@ -1192,7 +1308,67 @@
           >
             <span><i>08</i>Contact Reid</span><kbd>↗</kbd>
           </button>
+          <button
+            type="button"
+            id="command-option-9"
+            role="option"
+            data-command="#project-forge"
+          >
+            <span><i>09</i>Open Forge project</span><kbd>↵</kbd>
+          </button>
+          <button
+            type="button"
+            id="command-option-10"
+            role="option"
+            data-command="#project-sermon-notes"
+          >
+            <span><i>10</i>Open Sermon Notes project</span><kbd>↵</kbd>
+          </button>
+          <button
+            type="button"
+            id="command-option-11"
+            role="option"
+            data-command="#project-plc"
+          >
+            <span><i>11</i>Open PLC coursework</span><kbd>↵</kbd>
+          </button>
+          <button
+            type="button"
+            id="command-option-12"
+            role="option"
+            data-command="#project-seamless"
+          >
+            <span><i>12</i>Open Seamless project</span><kbd>↵</kbd>
+          </button>
+          <button
+            type="button"
+            id="command-option-13"
+            role="option"
+            data-command="copy-email"
+          >
+            <span><i>13</i>Copy Reid's email</span><kbd>↵</kbd>
+          </button>
+          <button
+            type="button"
+            id="command-option-14"
+            role="option"
+            data-command="motion"
+          >
+            <span><i>14</i><span data-motion-command>Pause motion</span></span
+            ><kbd>↵</kbd>
+          </button>
+          <button
+            type="button"
+            id="command-option-15"
+            role="option"
+            data-command="copy-link"
+          >
+            <span><i>15</i>Copy current page link</span><kbd>↵</kbd>
+          </button>
         </div>
+        <p class="command-empty" data-command-empty hidden>
+          No matching commands. Try “projects”, “email”, or “motion”.
+        </p>
         <p class="visually-hidden" id="command-status" aria-live="polite"></p>
         <div class="command-dialog__footer">
           <span><kbd>↑↓</kbd> Navigate</span><span><kbd>↵</kbd> Select</span
@@ -1200,6 +1376,14 @@
         </div>
       </section>
     </div>
+    <div
+      class="site-toast"
+      data-site-toast
+      role="status"
+      aria-live="polite"
+      aria-atomic="true"
+      hidden
+    ></div>
     <div class="cursor" aria-hidden="true"><span></span></div>
     <script src="main.js" defer></script>
     <script src="chat.js" defer></script>
