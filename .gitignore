@@ -1,2 +1,7 @@
 # Local screenshot / verification artifacts
 *.png
+
+# Local tooling and QA artifacts
+.wrangler/
+lighthouse-report.json
+qa-audit.cjs

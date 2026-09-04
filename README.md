@@ -1,59 +1,46 @@
 # Reid Thomas — Portfolio
 
-A responsive, accessible single-page portfolio built with plain HTML, CSS, and JavaScript. It has no build step. The page itself can be hosted on any static site service, but the AI portfolio assistant requires Cloudflare Pages (see below).
+A dark-first, responsive portfolio for Reid Thomas, built with semantic HTML, tokenized CSS, and dependency-free JavaScript. The site has no client build step and includes a real Cloudflare Workers AI portfolio assistant.
+
+## Architecture
+
+- `index.html` — page content, semantic section structure, SVG system visual, command palette, and assistant markup.
+- `styles.css` — design tokens, responsive layouts, product-interface visuals, motion, and reduced-motion fallbacks.
+- `main.js` — navigation, scroll state, reveal controller, workflow visualization, project tilt, lab interaction, command palette, and enhanced pointer.
+- `chat.js` — accessible assistant panel and client request handling.
+- `functions/api/chat.js` — Cloudflare Pages Function that validates requests and calls Workers AI with a fixed, portfolio-grounded prompt.
+- `wrangler.toml` — Cloudflare Pages and Workers AI configuration.
+
+The visual simulations are built from CSS and inline SVG, so there are no image or animation-library payloads. The system display is explicitly labeled as a process visualization; only the assistant panel performs real inference.
 
 ## Preview locally
 
-Open `index.html` directly in a browser, or run any static file server in this directory.
-
-For example, with Node.js:
+The static interface can be opened directly or served with any static server:
 
 ```bash
 npx serve .
 ```
 
-## Customize
-
-- Personal copy, experience, coursework, and links live in `index.html`.
-- Colors, typography, spacing, and responsive layout live in `styles.css`.
-- Navigation, current-year labels, active-section tracking, and reveal effects live in `main.js`.
-
-Before publishing, confirm the email address, GitHub URL, LinkedIn URL, dates, GPA, and experience descriptions.
-
-## Deploy
-
-Deploy to Cloudflare Pages via the Git integration or with Wrangler:
-
-```bash
-npx wrangler pages deploy .
-```
-
-No build command is required; the publish directory is the repository root. Do **not** use dashboard drag-and-drop upload — it does not compile the `functions/` directory, so `/api/chat` would 404.
-
-Without the assistant, the folder can also be deployed as-is to GitHub Pages, Netlify, or any other static host; the chat widget will show its fallback message there.
-
-## Portfolio assistant
-
-The corner chat widget uses a Cloudflare Pages Function at `functions/api/chat.js` and Cloudflare Workers AI. The model is called only on the server; no credential is exposed to the browser.
-
-Before deploying the assistant:
-
-1. Open the portfolio project in the Cloudflare dashboard.
-2. Go to **Settings → Bindings → Add → Workers AI**.
-3. Set the variable name to `AI`.
-4. Add the binding for **both Production and Preview** environments.
-5. Redeploy the Pages project.
-
-For local testing with your Cloudflare account:
+To run the assistant locally with a Cloudflare account:
 
 ```bash
 npx wrangler pages dev . --ai AI
 ```
 
-A plain static server can preview the widget, but cannot execute the `/api/chat` function.
+## Deploy
 
-### Cost and abuse protection
+Deploy through Cloudflare Pages Git integration or Wrangler:
 
-On the Workers **free plan**, Workers AI includes a free daily allocation (10,000 neurons/day) and cannot bill you — once the allocation is exhausted, requests fail until the daily reset and the widget shows its fallback message. Usage-based charges only apply if the account is upgraded to the Workers Paid plan; see [Workers AI pricing](https://developers.cloudflare.com/workers-ai/platform/pricing/).
+```bash
+npx wrangler pages deploy .
+```
 
-The function rejects requests without a matching `Origin` header, which blocks trivial scripted abuse. If the site is served from a custom domain, also add a [WAF rate-limiting rule](https://developers.cloudflare.com/waf/rate-limiting-rules/) for `/api/chat` (one rule is included on the free plan).
+There is no build command; the publish directory is the repository root. Dashboard drag-and-drop should not be used because it does not compile the `functions/` directory.
+
+In Cloudflare, add a Workers AI binding named `AI` to both Production and Preview environments. If a custom domain is used, add a WAF rate-limit rule for `/api/chat`.
+
+## Content to verify before publishing
+
+Confirm the email address, GitHub and LinkedIn URLs, GPA, graduation date, current roles, and internship availability. Add a canonical URL and sitemap only after the production domain is known; the project intentionally does not invent one.
+
+Project visuals are illustrative interface compositions based on the verified coursework. Replace them with real project screenshots if those become available, and add direct repository/demo links where appropriate.
