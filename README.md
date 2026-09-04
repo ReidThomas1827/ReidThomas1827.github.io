@@ -41,6 +41,6 @@ In Cloudflare, add a Workers AI binding named `AI` to both Production and Previe
 
 ## Content to verify before publishing
 
-Confirm the email address, GitHub and LinkedIn URLs, GPA, graduation date, current roles, and internship availability. Add a canonical URL and sitemap only after the production domain is known; the project intentionally does not invent one.
+Confirm the email address, GitHub and LinkedIn URLs, GPA, graduation date, current roles, and internship availability. Canonical, OpenGraph, and sitemap metadata currently use the verified GitHub Pages URL: `https://reidthomas1827.github.io/`. Update all three if the primary production domain changes.
 
 Project visuals are illustrative interface compositions based on the verified coursework. Replace them with real project screenshots if those become available, and add direct repository/demo links where appropriate.

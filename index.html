@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="no-js">
   <head>
     <meta charset="utf-8" />
@@ -19,12 +19,28 @@
     />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en_US" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:url" content="https://reidthomas1827.github.io/" />
+    <meta
+      property="og:image"
+      content="https://reidthomas1827.github.io/og-image.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Reid Thomas portfolio — software, systems, and engineering"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Reid Thomas — Portfolio" />
     <meta
       name="twitter:description"
       content="Software, systems, and engineering work by Reid Thomas."
     />
+    <meta
+      name="twitter:image"
+      content="https://reidthomas1827.github.io/og-image.png"
+    />
+    <link rel="canonical" href="https://reidthomas1827.github.io/" />
     <title>Reid Thomas — Software, Systems &amp; AI Workflows</title>
     <script>
       document.documentElement.classList.replace("no-js", "js");
@@ -37,6 +53,23 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Reid Thomas",
+        "url": "https://reidthomas1827.github.io/",
+        "email": "mailto:reidcthomas.05@gmail.com",
+        "sameAs": [
+          "https://github.com/ReidThomas1827",
+          "https://linkedin.com/in/reidcthomas"
+        ],
+        "affiliation": {
+          "@type": "EducationalOrganization",
+          "name": "University of Toledo"
+        }
+      }
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to main content</a>
@@ -50,10 +83,7 @@
 
     <header class="site-header" data-header>
       <nav class="nav shell" aria-label="Primary navigation">
-        <a
-          class="nav__brand"
-          href="#home"
-          data-cursor="HOME"
+        <a class="nav__brand" href="#home" data-cursor="HOME"
           ><span class="nav__mark" aria-hidden="true">RT</span
           ><span class="nav__identity"
             ><b>Reid Thomas</b><small>Systems / Software</small></span
@@ -77,7 +107,8 @@
           ><a class="nav__link" href="#contact">Contact</a>
         </div>
         <div class="nav__tools">
-          <span class="nav__status"><i aria-hidden="true"></i>Open to work</span
+          <span class="nav__status"
+            ><i aria-hidden="true"></i>Open to internships + co-ops</span
           ><button
             class="nav__command"
             type="button"
@@ -114,7 +145,8 @@
               class="button button--primary"
               href="#projects"
               data-cursor="VIEW"
-              ><span>Explore selected work</span><i aria-hidden="true">↘</i></a
+              ><span>Explore technical work</span
+              ><i aria-hidden="true">↘</i></a
             ><a
               class="button button--secondary"
               href="mailto:reidcthomas.05@gmail.com"
@@ -125,7 +157,7 @@
           <dl class="hero__readout">
             <div>
               <dt>Current focus</dt>
-              <dd>Systems engineering</dd>
+              <dd>Computer systems</dd>
             </div>
             <div>
               <dt>Education</dt>
@@ -133,20 +165,17 @@
             </div>
             <div>
               <dt>Status</dt>
-              <dd><i aria-hidden="true"></i>Building / available</dd>
+              <dd><i aria-hidden="true"></i>Open to internships + co-ops</dd>
             </div>
           </dl>
         </div>
 
-        <div
-          class="hero__visual"
-          data-system-visual
-        >
+        <div class="hero__visual" data-system-visual>
           <div class="system-window">
             <header class="system-window__bar">
               <div>
                 <span class="system-window__glyph" aria-hidden="true"></span
-                ><b>BUILD SESSION</b
+                ><b>ENGINEERING LOOP</b
                 ><span class="system-window__demo">PROCESS VISUALIZATION</span>
               </div>
               <span class="system-window__live"
@@ -210,14 +239,14 @@
                 <g class="system-node" transform="translate(265 78)">
                   <rect x="-39" y="-22" width="78" height="44" rx="5" />
                   <circle class="system-node__core" cx="-25" r="3" />
-                  <text x="-14" y="4">FABLE</text>
-                  <text class="system-node__sub" y="39">DESIGN</text>
+                  <text x="-14" y="4">EXPLORE</text>
+                  <text class="system-node__sub" y="39">RESEARCH</text>
                 </g>
                 <g class="system-node" transform="translate(265 242)">
                   <rect x="-39" y="-22" width="78" height="44" rx="5" />
                   <circle class="system-node__core" cx="-25" r="3" />
-                  <text x="-14" y="4">SOL</text>
-                  <text class="system-node__sub" y="39">ENGINEER</text>
+                  <text x="-14" y="4">BUILD</text>
+                  <text class="system-node__sub" y="39">IMPLEMENT</text>
                 </g>
                 <g
                   class="system-node system-node--hub"
@@ -225,7 +254,7 @@
                 >
                   <circle r="28" />
                   <path d="M-9 0h18M0-9v18" />
-                  <text y="49">ORCA</text>
+                  <text y="49">VERIFY</text>
                 </g>
                 <g
                   class="system-node system-node--ship"
@@ -239,23 +268,23 @@
               <div class="system-console" aria-hidden="true">
                 <div class="system-console__line">
                   <span>01</span>
-                  <p data-system-log>Inspecting architecture</p>
+                  <p data-system-log>Framing the problem</p>
                   <i></i>
                 </div>
                 <div class="system-console__line">
                   <span>02</span>
-                  <p>Preserving verified content</p>
+                  <p>Building a working model</p>
                   <i></i>
                 </div>
                 <div class="system-console__line">
                   <span>03</span>
-                  <p>Validating interface states</p>
+                  <p>Testing assumptions and edges</p>
                   <i></i>
                 </div>
               </div>
             </div>
             <footer class="system-window__footer">
-              <div><span>SESSION</span><b>PORTFOLIO_BUILD</b></div>
+              <div><span>SESSION</span><b>ENGINEERING_LOOP</b></div>
               <div><span>STATE</span><b data-system-phase>ANALYZING</b></div>
               <div class="system-progress">
                 <span><i data-system-progress></i></span
@@ -264,8 +293,8 @@
             </footer>
           </div>
           <p class="hero__visual-note">
-            <span>FIG. 01</span> A visual model of this portfolio's multi-agent
-            build loop—not a live inference display.
+            <span>FIG. 01</span> A visual model of an AI-assisted engineering
+            loop—not a live inference display.
           </p>
         </div>
       </section>
@@ -319,9 +348,10 @@
             </dd>
           </div>
           <div>
-            <dt>03 / Practice</dt>
+            <dt>03 / Current role</dt>
             <dd>
-              <strong>3×</strong><span>Software · systems<br />operations</span>
+              <strong>IT</strong
+              ><span>Engineering College<br />Consultant</span>
             </dd>
           </div>
         </dl>
@@ -336,13 +366,13 @@
           <header class="section-heading section-heading--split" data-reveal>
             <div>
               <p class="eyebrow">
-                <span>02 / Selected work</span><span>2024—2025</span>
+                <span>02 / Technical work</span><span>2024—2026</span>
               </p>
               <h2 id="projects-title">Systems in practice.</h2>
             </div>
             <p>
-              Academic builds and technical coursework, presented as the
-              problems and system layers they explore.
+              Coursework and academic builds, presented clearly as learning in
+              progress—not as commercial product work.
             </p>
           </header>
           <div class="project-list">
@@ -383,7 +413,7 @@
               </div>
               <div class="project__body">
                 <div class="project__meta">
-                  <span>Industrial controls</span
+                  <span>Coursework / Industrial controls</span
                   ><time datetime="2025">2025</time>
                 </div>
                 <h3>PC &amp; Industrial Networks</h3>
@@ -394,14 +424,14 @@
                 </p>
                 <dl class="project__detail">
                   <div>
-                    <dt>Challenge</dt>
+                    <dt>Built</dt>
                     <dd>
-                      Translate physical process requirements into dependable
-                      relay, timer, counter, and integer-math logic.
+                      PLC programs using relay, timer, counter, integer-math,
+                      and scan-dependent logic.
                     </dd>
                   </div>
                   <div>
-                    <dt>Outcome</dt>
+                    <dt>Learned</dt>
                     <dd>
                       Practical experience reasoning about system reliability
                       and process efficiency in industrial control environments.
@@ -423,7 +453,9 @@
                 aria-label="Abstract Python data interface illustration"
               >
                 <div class="project-ui project-ui--python" aria-hidden="true">
-                  <div class="code-nav"><span>PY</span><i></i><i></i><i></i></div>
+                  <div class="code-nav">
+                    <span>PY</span><i></i><i></i><i></i>
+                  </div>
                   <div class="code-pane">
                     <header>analysis.py <b>●</b></header>
                     <ol>
@@ -442,7 +474,7 @@
               </div>
               <div class="project__body">
                 <div class="project__meta">
-                  <span>Software foundations</span
+                  <span>Coursework / Software foundations</span
                   ><time datetime="2024">2024</time>
                 </div>
                 <h3>Python &amp; Data Structures</h3>
@@ -453,14 +485,14 @@
                 </p>
                 <dl class="project__detail">
                   <div>
-                    <dt>Challenge</dt>
+                    <dt>Built</dt>
                     <dd>
-                      Turn open-ended problem statements into clear program
-                      structure and working logic.
+                      A functional calculator and data-analysis scripts with
+                      clear program structure and working logic.
                     </dd>
                   </div>
                   <div>
-                    <dt>Outcome</dt>
+                    <dt>Learned</dt>
                     <dd>
                       A durable base in Python fundamentals, algorithmic
                       thinking, and data manipulation.
@@ -505,7 +537,7 @@
               </div>
               <div class="project__body">
                 <div class="project__meta">
-                  <span>Computer systems</span
+                  <span>Coursework / Computer systems</span
                   ><time datetime="2024">2024—25</time>
                 </div>
                 <h3>Digital Logic &amp; Architecture</h3>
@@ -516,14 +548,14 @@
                 </p>
                 <dl class="project__detail">
                   <div>
-                    <dt>Challenge</dt>
+                    <dt>Focus</dt>
                     <dd>
                       Connect abstract code to the gates, instructions, and data
                       paths that execute it.
                     </dd>
                   </div>
                   <div>
-                    <dt>Outcome</dt>
+                    <dt>Learned</dt>
                     <dd>
                       A practical mental model for reasoning about computers
                       below the application layer.
@@ -536,6 +568,74 @@
                   <li>Digital Circuits</li>
                   <li>Architecture</li>
                 </ul>
+              </div>
+            </article>
+            <article class="project project--reverse" data-project data-reveal>
+              <div
+                class="project__visual project__visual--site"
+                aria-label="Stylized interface of this portfolio with its AI assistant"
+              >
+                <div class="project-ui project-ui--site" aria-hidden="true">
+                  <header>
+                    <span><i></i><i></i><i></i></span>
+                    <b>reid-portfolio.pages.dev</b>
+                    <em>EDGE</em>
+                  </header>
+                  <div class="site-preview">
+                    <div class="site-preview__hero">
+                      <i></i><i></i><i class="site-preview__accent"></i>
+                    </div>
+                    <div class="site-preview__chat">
+                      <small><b></b>WORKERS AI · LIVE</small>
+                      <p>“What has Reid built?”</p>
+                      <span></span><span></span>
+                    </div>
+                  </div>
+                  <footer>
+                    <span>PAGES FUNCTION</span><span>ORIGIN VERIFIED</span
+                    ><span>0 DEPENDENCIES</span>
+                  </footer>
+                </div>
+                <span class="project__index" aria-hidden="true">04</span>
+              </div>
+              <div class="project__body">
+                <div class="project__meta">
+                  <span>AI-native web</span><time datetime="2026">2026</time>
+                </div>
+                <h3>This Portfolio</h3>
+                <p>
+                  A zero-build site with a real server-side AI assistant—a
+                  Cloudflare Pages Function running Workers AI, grounded in the
+                  page's verified content and shipped through an AI-assisted,
+                  human-reviewed workflow.
+                </p>
+                <dl class="project__detail">
+                  <div>
+                    <dt>Focus</dt>
+                    <dd>
+                      Serve real inference safely from the edge: origin
+                      validation, conversation guards, and a fixed
+                      portfolio-grounded prompt.
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>Learned</dt>
+                    <dd>
+                      How to design, secure, and deploy an LLM feature
+                      end-to-end—without frameworks, build steps, or exposed
+                      credentials.
+                    </dd>
+                  </div>
+                </dl>
+                <ul class="tag-list">
+                  <li>Workers AI</li>
+                  <li>Pages Functions</li>
+                  <li>Llama 3.1</li>
+                  <li>Vanilla JS</li>
+                </ul>
+                <button class="text-link" type="button" data-chat-open>
+                  Try the assistant <span aria-hidden="true">↗</span>
+                </button>
               </div>
             </article>
           </div>
@@ -552,11 +652,13 @@
             <p class="eyebrow">
               <span>03 / Build process</span><span>Human directed</span>
             </p>
-            <h2 id="process-title">AI as a system,<br />not a shortcut.</h2>
+            <h2 id="process-title">
+              A practical loop<br />for building with AI.
+            </h2>
           </div>
           <p>
-            This portfolio’s workflow separates exploration, implementation, and
-            review—then keeps human judgment at the center.
+            AI can accelerate research and implementation. Clear constraints,
+            testing, and human judgment still determine the result.
           </p>
         </header>
         <div class="workflow" data-workflow data-reveal>
@@ -572,31 +674,31 @@
             <li class="workflow__node">
               <span>01</span>
               <div>
-                <small>ORCHESTRATE</small><strong>Orca</strong>
-                <p>Scope, inspect, route, synthesize</p>
+                <small>FRAME</small><strong>Context</strong>
+                <p>Scope, inspect, define constraints</p>
               </div>
             </li>
             <li class="workflow__branch">
               <div class="workflow__node">
                 <span>02A</span>
                 <div>
-                  <small>VISUAL DIRECTION</small><strong>Fable 5</strong>
-                  <p>Composition, UX, motion language</p>
+                  <small>EXPLORE</small><strong>Research</strong>
+                  <p>Compare approaches and surface risks</p>
                 </div>
               </div>
               <div class="workflow__node">
                 <span>02B</span>
                 <div>
-                  <small>ENGINEERING</small><strong>Sol</strong>
-                  <p>Architecture, performance, review</p>
+                  <small>IMPLEMENT</small><strong>Build</strong>
+                  <p>Prototype, code, and integrate</p>
                 </div>
               </div>
             </li>
             <li class="workflow__node">
               <span>03</span>
               <div>
-                <small>VALIDATE</small><strong>Human review</strong>
-                <p>Accuracy, accessibility, quality</p>
+                <small>VALIDATE</small><strong>Verify</strong>
+                <p>Test, review, and apply judgment</p>
               </div>
             </li>
             <li class="workflow__node workflow__node--output">
@@ -777,8 +879,8 @@
               <small>AI WORKFLOW</small>
               <h3>Direct the system</h3>
               <p>
-                Repository inspection · constrained generation · multi-agent
-                review · human validation
+                Research · constrained generation · rapid prototyping · human
+                validation
               </p>
             </div>
           </article>
@@ -890,7 +992,7 @@
     <footer class="site-footer shell">
       <div>
         <a class="footer__brand" href="#home">RT / <span data-year></span></a>
-        <p>Designed and engineered with intent.<br />Deployed on Cloudflare.</p>
+        <p>Designed and engineered with intent.<br />Built for Cloudflare.</p>
       </div>
       <nav aria-label="Social links">
         <a href="mailto:reidcthomas.05@gmail.com">Email ↗</a
@@ -907,7 +1009,7 @@
         >
       </nav>
       <div class="footer__system">
-        <span><i></i>System online</span
+        <span><i></i>Interface online</span
         ><span>LOCAL <time data-local-time>--:--:--</time></span
         ><a href="#home">Back to top ↑</a>
       </div>
@@ -958,7 +1060,7 @@
           aria-label="Suggested questions"
         >
           <button type="button" data-question="What has Reid built?">
-            Selected work</button
+            Technical work</button
           ><button
             type="button"
             data-question="What are Reid's strongest technical skills?"
@@ -1013,54 +1115,94 @@
         aria-modal="true"
         aria-labelledby="command-title"
       >
-        <header>
+        <div class="command-dialog__header">
           <span aria-hidden="true">⌘</span
           ><label id="command-title" for="command-input">Command menu</label
           ><kbd>ESC</kbd>
-        </header>
+        </div>
         <div class="command-search">
           <span aria-hidden="true">⌕</span
           ><input
             id="command-input"
             type="search"
+            role="combobox"
+            aria-autocomplete="list"
+            aria-controls="command-results"
+            aria-expanded="false"
             autocomplete="off"
             spellcheck="false"
             placeholder="Type a command…"
           />
         </div>
         <div
+          id="command-results"
           class="command-results"
-          role="group"
+          role="listbox"
           aria-label="Portfolio commands"
         >
-          <button type="button" data-command="#home">
+          <button
+            id="command-option-1"
+            type="button"
+            role="option"
+            data-command="#home"
+          >
             <span><i>01</i>Go home</span><kbd>↵</kbd></button
-          ><button type="button" data-command="#projects">
+          ><button
+            id="command-option-2"
+            type="button"
+            role="option"
+            data-command="#projects"
+          >
             <span><i>02</i>View projects</span><kbd>↵</kbd></button
-          ><button type="button" data-command="#process">
-            <span><i>03</i>View AI workflow</span><kbd>↵</kbd></button
-          ><button type="button" data-command="#experience">
+          ><button
+            id="command-option-3"
+            type="button"
+            role="option"
+            data-command="#process"
+          >
+            <span><i>03</i>View build workflow</span><kbd>↵</kbd></button
+          ><button
+            id="command-option-4"
+            type="button"
+            role="option"
+            data-command="#experience"
+          >
             <span><i>04</i>View experience</span><kbd>↵</kbd></button
-          ><button type="button" data-command="#lab">
+          ><button
+            id="command-option-5"
+            type="button"
+            role="option"
+            data-command="#lab"
+          >
             <span><i>05</i>Open lab</span><kbd>↵</kbd></button
-          ><button type="button" data-command="chat">
+          ><button
+            id="command-option-6"
+            type="button"
+            role="option"
+            data-command="chat"
+          >
             <span><i>06</i>Ask the portfolio</span><kbd>↵</kbd></button
           ><button
             type="button"
+            id="command-option-7"
+            role="option"
             data-command="https://github.com/ReidThomas1827"
           >
             <span><i>07</i>Open GitHub</span><kbd>↗</kbd></button
           ><button
             type="button"
+            id="command-option-8"
+            role="option"
             data-command="mailto:reidcthomas.05@gmail.com"
           >
             <span><i>08</i>Contact Reid</span><kbd>↗</kbd>
           </button>
         </div>
-        <footer>
+        <p class="visually-hidden" id="command-status" aria-live="polite"></p>
+        <div class="command-dialog__footer">
           <span><kbd>↑↓</kbd> Navigate</span><span><kbd>↵</kbd> Select</span
           ><span>PORTFOLIO / COMMAND</span>
-        </footer>
+        </div>
       </section>
     </div>
     <div class="cursor" aria-hidden="true"><span></span></div>

@@ -1,7 +1,12 @@
 # Local screenshot / verification artifacts
 *.png
+!og-image.png
 
 # Local tooling and QA artifacts
 .wrangler/
 lighthouse-report.json
 qa-audit.cjs
+
+# Committed OG share image (exception to *.png)
+!og-image.png
+qa-review.cjs

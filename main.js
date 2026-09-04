@@ -133,30 +133,31 @@ if (systemVisual) {
     {
       state: "ONLINE",
       phase: "ANALYZING",
-      log: "Inspecting architecture",
+      log: "Framing the problem",
       progress: 38,
     },
     {
       state: "WORKING",
-      phase: "ROUTING",
-      log: "Mapping system layers",
+      phase: "EXPLORING",
+      log: "Comparing possible approaches",
       progress: 61,
     },
     {
       state: "WORKING",
-      phase: "SYNTHESIZING",
-      log: "Building interface model",
+      phase: "BUILDING",
+      log: "Implementing a working model",
       progress: 84,
     },
     {
       state: "VERIFIED",
       phase: "COMPLETE",
-      log: "Validating final output",
+      log: "Testing assumptions and edges",
       progress: 100,
     },
   ];
   let stateIndex = 0;
   let stateTimer = 0;
+  let systemInView = true;
   const renderState = (index) => {
     const next = states[index];
     stateLabel.textContent = next.state;
@@ -184,14 +185,15 @@ if (systemVisual) {
   else if ("IntersectionObserver" in window) {
     new IntersectionObserver(
       (entries) =>
-        entries.forEach((entry) =>
-          entry.isIntersecting ? startStates() : stopStates(),
-        ),
+        entries.forEach((entry) => {
+          systemInView = entry.isIntersecting;
+          systemInView ? startStates() : stopStates();
+        }),
       { threshold: 0.08 },
     ).observe(systemVisual);
   } else startStates();
   document.addEventListener("visibilitychange", () =>
-    document.hidden ? stopStates() : startStates(),
+    document.hidden || !systemInView ? stopStates() : startStates(),
   );
 
   if (!reducedMotion.matches && finePointer.matches) {
@@ -313,6 +315,7 @@ if (signalCard && finePointer.matches && !reducedMotion.matches) {
 /* Accessible command palette */
 const palette = document.querySelector("[data-command-palette]");
 const paletteInput = document.getElementById("command-input");
+const commandStatus = document.getElementById("command-status");
 const paletteButtons = palette
   ? [...palette.querySelectorAll("[data-command]")]
   : [];
@@ -322,18 +325,30 @@ let commandReturnTarget = null;
 const visibleCommands = () => paletteButtons.filter((button) => !button.hidden);
 const selectCommand = (index) => {
   const visible = visibleCommands();
-  if (!visible.length) return;
+  if (!visible.length) {
+    paletteInput?.removeAttribute("aria-activedescendant");
+    if (commandStatus) commandStatus.textContent = "No commands found.";
+    return;
+  }
   selectedCommand = (index + visible.length) % visible.length;
   paletteButtons.forEach((button) => {
     button.classList.remove("is-selected");
+    button.setAttribute("aria-selected", "false");
   });
-  visible[selectedCommand].classList.add("is-selected");
-  visible[selectedCommand].scrollIntoView({ block: "nearest" });
+  const selected = visible[selectedCommand];
+  selected.classList.add("is-selected");
+  selected.setAttribute("aria-selected", "true");
+  paletteInput?.setAttribute("aria-activedescendant", selected.id);
+  if (commandStatus)
+    commandStatus.textContent = `${selected.textContent.trim()} selected. ${visible.length} commands available.`;
+  selected.scrollIntoView({ block: "nearest" });
 };
 const closePalette = () => {
   if (!palette || palette.hidden) return;
   palette.hidden = true;
   document.body.style.overflow = "";
+  paletteInput?.setAttribute("aria-expanded", "false");
+  paletteInput?.removeAttribute("aria-activedescendant");
   commandReturnTarget?.focus();
 };
 const openPalette = (trigger) => {
@@ -341,6 +356,7 @@ const openPalette = (trigger) => {
   commandReturnTarget = trigger || document.activeElement;
   palette.hidden = false;
   document.body.style.overflow = "hidden";
+  paletteInput.setAttribute("aria-expanded", "true");
   paletteInput.value = "";
   paletteButtons.forEach((button) => (button.hidden = false));
   selectedCommand = 0;
