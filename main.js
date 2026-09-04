@@ -81,6 +81,52 @@ if (navToggle && navMenu) {
     });
 }
 
+/* Sliding nav underline that follows hover/focus and settles on the active
+   section link. Additive: CSS hides it on mobile and falls back to the
+   per-link underline without JS. */
+if (navMenu && navLinks.length) {
+  const slider = document.createElement("span");
+  slider.className = "nav__slider";
+  slider.setAttribute("aria-hidden", "true");
+  navMenu.appendChild(slider);
+  const activeLink = () =>
+    navMenu.querySelector('.nav__link[aria-current="location"]');
+  const moveTo = (link) => {
+    if (!link) {
+      slider.style.opacity = "0";
+      return;
+    }
+    slider.style.opacity = "1";
+    slider.style.width = `${link.offsetWidth}px`;
+    slider.style.transform = `translateX(${link.offsetLeft}px)`;
+  };
+  navLinks.forEach((link) => {
+    link.addEventListener("pointerenter", () => moveTo(link));
+    link.addEventListener("focus", () => moveTo(link));
+  });
+  navMenu.addEventListener("pointerleave", () => moveTo(activeLink()));
+  navMenu.addEventListener("focusout", () => {
+    window.setTimeout(() => {
+      if (!navMenu.contains(document.activeElement)) moveTo(activeLink());
+    }, 0);
+  });
+  const sliderObserver = new MutationObserver(() => {
+    if (!navMenu.matches(":hover")) moveTo(activeLink());
+  });
+  navLinks.forEach((link) =>
+    sliderObserver.observe(link, {
+      attributes: true,
+      attributeFilter: ["aria-current"],
+    }),
+  );
+  window.addEventListener(
+    "resize",
+    () => moveTo(navMenu.querySelector(".nav__link:hover") || activeLink()),
+    { passive: true },
+  );
+  window.requestAnimationFrame(() => moveTo(activeLink()));
+}
+
 /* Section visibility and active navigation */
 const revealTargets = [...document.querySelectorAll("[data-reveal]")];
 if (reducedMotion.matches || !("IntersectionObserver" in window)) {
