@@ -19,10 +19,10 @@
     />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en_US" />
-    <meta property="og:url" content="https://reidthomas1827.github.io/" />
+    <meta property="og:url" content="https://reid-portfolio.pages.dev/" />
     <meta
       property="og:image"
-      content="https://reidthomas1827.github.io/og-image.png"
+      content="https://reid-portfolio.pages.dev/og-image.png"
     />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -38,9 +38,13 @@
     />
     <meta
       name="twitter:image"
-      content="https://reidthomas1827.github.io/og-image.png"
+      content="https://reid-portfolio.pages.dev/og-image.png"
     />
-    <link rel="canonical" href="https://reidthomas1827.github.io/" />
+    <meta
+      name="twitter:image:alt"
+      content="Reid Thomas portfolio — software, systems, and engineering"
+    />
+    <link rel="canonical" href="https://reid-portfolio.pages.dev/" />
     <title>Reid Thomas — Software, Systems &amp; AI Workflows</title>
     <script>
       document.documentElement.classList.replace("no-js", "js");
@@ -58,7 +62,7 @@
         "@context": "https://schema.org",
         "@type": "Person",
         "name": "Reid Thomas",
-        "url": "https://reidthomas1827.github.io/",
+        "url": "https://reid-portfolio.pages.dev/",
         "email": "mailto:reidcthomas.05@gmail.com",
         "sameAs": [
           "https://github.com/ReidThomas1827",
@@ -115,7 +119,7 @@
             data-command-open
             aria-label="Open command palette"
           >
-            <span>Command</span><kbd>⌘ K</kbd>
+            <span>Command</span><kbd data-shortcut-hint>⌘ K</kbd>
           </button>
         </div>
       </nav>
@@ -371,8 +375,8 @@
               <h2 id="projects-title">Systems in practice.</h2>
             </div>
             <p>
-              Coursework and academic builds, presented clearly as learning in
-              progress—not as commercial product work.
+              Coursework and a working portfolio system, labeled by context so
+              academic exploration is never presented as commercial work.
             </p>
           </header>
           <div class="project-list">
@@ -538,7 +542,10 @@
               <div class="project__body">
                 <div class="project__meta">
                   <span>Coursework / Computer systems</span
-                  ><time datetime="2024">2024—25</time>
+                  ><time datetime="2024">2024</time>—<time
+                    datetime="2025"
+                    >25</time
+                  >
                 </div>
                 <h3>Digital Logic &amp; Architecture</h3>
                 <p>
@@ -573,26 +580,27 @@
             <article class="project project--reverse" data-project data-reveal>
               <div
                 class="project__visual project__visual--site"
+                role="img"
                 aria-label="Stylized interface of this portfolio with its AI assistant"
               >
                 <div class="project-ui project-ui--site" aria-hidden="true">
                   <header>
                     <span><i></i><i></i><i></i></span>
-                    <b>reid-portfolio.pages.dev</b>
-                    <em>EDGE</em>
+                    <b>PORTFOLIO / SYSTEM</b>
+                    <em>EDGE READY</em>
                   </header>
                   <div class="site-preview">
                     <div class="site-preview__hero">
                       <i></i><i></i><i class="site-preview__accent"></i>
                     </div>
                     <div class="site-preview__chat">
-                      <small><b></b>WORKERS AI · LIVE</small>
+                      <small><b></b>AI ASSISTANT · GROUNDED</small>
                       <p>“What has Reid built?”</p>
                       <span></span><span></span>
                     </div>
                   </div>
                   <footer>
-                    <span>PAGES FUNCTION</span><span>ORIGIN VERIFIED</span
+                    <span>PAGES FUNCTION</span><span>ORIGIN CHECK</span
                     ><span>0 DEPENDENCIES</span>
                   </footer>
                 </div>
@@ -600,14 +608,14 @@
               </div>
               <div class="project__body">
                 <div class="project__meta">
-                  <span>AI-native web</span><time datetime="2026">2026</time>
+                  <span>Independent build / AI web</span
+                  ><time datetime="2026">2026</time>
                 </div>
                 <h3>This Portfolio</h3>
                 <p>
-                  A zero-build site with a real server-side AI assistant—a
-                  Cloudflare Pages Function running Workers AI, grounded in the
-                  page's verified content and shipped through an AI-assisted,
-                  human-reviewed workflow.
+                  A zero-build site with a server-side AI assistant—a Cloudflare
+                  Pages Function designed to run Workers AI and stay grounded in
+                  the page's verified content.
                 </p>
                 <dl class="project__detail">
                   <div>
@@ -621,7 +629,7 @@
                   <div>
                     <dt>Learned</dt>
                     <dd>
-                      How to design, secure, and deploy an LLM feature
+                      How to design, secure, and integrate an LLM feature
                       end-to-end—without frameworks, build steps, or exposed
                       credentials.
                     </dd>
@@ -633,9 +641,18 @@
                   <li>Llama 3.1</li>
                   <li>Vanilla JS</li>
                 </ul>
-                <button class="text-link" type="button" data-chat-open>
-                  Try the assistant <span aria-hidden="true">↗</span>
-                </button>
+                <div class="project__actions">
+                  <a
+                    class="text-link"
+                    href="https://github.com/ReidThomas1827/ReidThomas1827.github.io"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >View source <span aria-hidden="true">↗</span></a
+                  >
+                  <button class="text-link" type="button" data-chat-open>
+                    Try the assistant <span aria-hidden="true">↗</span>
+                  </button>
+                </div>
               </div>
             </article>
           </div>
@@ -924,7 +941,7 @@
             <article class="lab-card" data-reveal>
               <header><span>UTILITY 02</span><b>COMMAND LAYER</b></header>
               <div class="lab-command">
-                <kbd>CTRL</kbd><i>+</i><kbd>K</kbd>
+                <kbd data-shortcut-mod>CTRL</kbd><i>+</i><kbd>K</kbd>
                 <p>Navigate the portfolio without leaving the keyboard.</p>
                 <button type="button" data-command-open>
                   Open command palette <span>↗</span>

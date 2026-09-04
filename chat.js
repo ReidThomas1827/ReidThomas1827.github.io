@@ -115,6 +115,11 @@ if (chatWidget) {
       conversation.push({ role: "assistant", content: data.answer });
     } catch (error) {
       typing.remove();
+      // Roll back the unanswered user turn so history stays alternating and
+      // the next question doesn't send two consecutive user roles (400).
+      if (conversation[conversation.length - 1]?.role === "user") {
+        conversation.pop();
+      }
       const message =
         error.name === "AbortError"
           ? "That took too long. Please try the question again."

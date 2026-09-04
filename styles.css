@@ -1514,6 +1514,7 @@ kbd {
 button.text-link {
   background: transparent;
   cursor: pointer;
+  padding: 0 0 5px;
 }
 .project__body {
   min-width: 0;
@@ -1600,6 +1601,11 @@ button.text-link {
 }
 .text-link:hover span {
   transform: translate(3px, -3px);
+}
+.project__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
 }
 
 /* Workflow */
@@ -2681,6 +2687,11 @@ button.text-link {
   min-height: 68px;
   padding: 0 18px;
   border-bottom: 1px solid var(--border);
+  transition: border-color var(--duration-micro) var(--ease-out-expo);
+}
+.command-search:focus-within {
+  border-bottom-color: var(--accent);
+  box-shadow: 0 1px 0 0 var(--accent);
 }
 .command-search span {
   color: var(--accent);

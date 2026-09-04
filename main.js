@@ -387,6 +387,9 @@ palette
   ?.querySelector("[data-command-close]")
   ?.addEventListener("click", closePalette);
 paletteButtons.forEach((button) => {
+  // Options are driven by aria-activedescendant, not DOM focus, so they must
+  // not be tab stops — otherwise Tab desyncs focus from the highlighted item.
+  button.tabIndex = -1;
   button.addEventListener("pointerenter", () =>
     selectCommand(visibleCommands().indexOf(button)),
   );
@@ -427,16 +430,9 @@ document.addEventListener("keydown", (event) => {
     runCommand(visibleCommands()[selectedCommand]);
   }
   if (event.key === "Tab") {
-    const focusable = [paletteInput, ...visibleCommands()];
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-    if (event.shiftKey && document.activeElement === first) {
-      event.preventDefault();
-      last.focus();
-    } else if (!event.shiftKey && document.activeElement === last) {
-      event.preventDefault();
-      first.focus();
-    }
+    // Trap focus on the input; options are reached via arrows, not Tab.
+    event.preventDefault();
+    paletteInput?.focus();
   }
 });
 
@@ -447,6 +443,19 @@ document
       window.dispatchEvent(new CustomEvent("portfolio:open-chat")),
     ),
   );
+
+/* Platform-correct keyboard shortcut hints (defaults assume macOS in markup) */
+const isMacPlatform = /mac|iphone|ipad|ipod/i.test(
+  navigator.platform || navigator.userAgent || "",
+);
+if (!isMacPlatform) {
+  document
+    .querySelectorAll("[data-shortcut-hint]")
+    .forEach((el) => (el.textContent = "Ctrl K"));
+  document
+    .querySelectorAll("[data-shortcut-mod]")
+    .forEach((el) => (el.textContent = "CTRL"));
+}
 
 /* Enhanced cursor is additive; the native cursor is never disabled */
 const cursor = document.querySelector(".cursor");

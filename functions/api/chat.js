@@ -12,7 +12,7 @@ Technical skills and coursework:
 
 Academic work:
 - PC & Industrial Networks (2025): developed and troubleshot programmable controller programs for factory-floor control using relays, timers, counters, integer math, and scan-dependent programming. Focused on logic development, reliability, and process efficiency.
-- Intro to Computer Science (2024): learned Python fundamentals, data structures, and algorithms; built a calculator and data-analysis scripts.
+- Python & Data Structures (2024): built a functional calculator and data-analysis scripts while developing a foundation in Python, programming logic, data structures, and algorithms.
 - Digital Logic & Computer Architecture (2024–2025): studied Boolean logic, digital circuits, processor organization, and assembly language.
 
 Portfolio systems:
@@ -74,8 +74,9 @@ export async function onRequestPost({ request, env }) {
     return json({ error: "Workers AI binding is not configured." }, 503);
   }
 
-  // Browsers send Origin on POST; rejecting mismatches blocks trivial
-  // cross-site and scripted abuse of the paid inference endpoint.
+  // The Origin check only blocks cross-site requests from real browsers; a
+  // scripted client can forge Origin, so it is NOT an abuse control. Rate
+  // limiting (Cloudflare WAF / Turnstile) is what protects the endpoint.
   const origin = request.headers.get("origin");
   if (!origin || origin !== new URL(request.url).origin) {
     return json({ error: "Forbidden." }, 403);
@@ -83,6 +84,13 @@ export async function onRequestPost({ request, env }) {
 
   if (!request.headers.get("content-type")?.includes("application/json")) {
     return json({ error: "Content-Type must be application/json." }, 415);
+  }
+
+  // Reject oversized bodies before parsing so a large payload can't waste
+  // Worker CPU. Legitimate requests are a handful of short messages.
+  const declaredLength = Number(request.headers.get("content-length") || 0);
+  if (declaredLength > 12000) {
+    return json({ error: "Request body too large." }, 413);
   }
 
   let payload;
