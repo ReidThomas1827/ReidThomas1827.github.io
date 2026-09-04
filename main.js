@@ -265,6 +265,39 @@ if (!reducedMotion.matches && finePointer.matches) {
   });
 }
 
+/* Subtle magnetic pull on primary buttons (pointer feedback only). Skips
+   touch and reduced-motion, and yields to the Pause-motion control. */
+if (!reducedMotion.matches && finePointer.matches) {
+  const magneticButtons = [...document.querySelectorAll(".button")];
+  const MAX_PULL = 5;
+  const clearPulls = () =>
+    magneticButtons.forEach((b) => (b.style.transform = ""));
+  magneticButtons.forEach((button) => {
+    let magFrame = 0;
+    button.addEventListener(
+      "pointermove",
+      (event) => {
+        if (magFrame || document.documentElement.classList.contains("motion-paused"))
+          return;
+        magFrame = window.requestAnimationFrame(() => {
+          const b = button.getBoundingClientRect();
+          const dx = (event.clientX - (b.left + b.width / 2)) / (b.width / 2);
+          const dy = (event.clientY - (b.top + b.height / 2)) / (b.height / 2);
+          button.style.transform = `translate(${(dx * MAX_PULL).toFixed(1)}px, ${(dy * MAX_PULL).toFixed(1)}px)`;
+          magFrame = 0;
+        });
+      },
+      { passive: true },
+    );
+    button.addEventListener("pointerleave", () => {
+      button.style.transform = "";
+    });
+  });
+  document.addEventListener("portfolio:motion-toggle", (event) => {
+    if (event.detail?.paused) clearPulls();
+  });
+}
+
 /* Local, zero-network lab interaction. Decorative: responds to mouse and
    touch (the passive listener never blocks scroll) and is hidden from
    assistive tech, so it is not presented as an operable control. */
