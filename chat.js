@@ -12,6 +12,8 @@ if (chatWidget) {
   const input = chatWidget.querySelector("#chat-input");
   const sendButton = chatWidget.querySelector(".chat-form__send");
   const status = chatWidget.querySelector(".chat-status");
+  const isStaticMirror = /\.github\.io$/i.test(window.location.hostname);
+  const primaryAssistantUrl = "https://reid-portfolio.pages.dev/#contact";
   const chatBackground = [
     document.querySelector(".site-header"),
     document.querySelector("main"),
@@ -24,6 +26,10 @@ if (chatWidget) {
 
   let chatReturnTarget = null;
   const setOpen = (open) => {
+    if (open && isStaticMirror) {
+      window.location.href = primaryAssistantUrl;
+      return;
+    }
     if (open) {
       // Remember whatever opened the panel (launcher, lab card, or command
       // palette) so focus returns there on close, not always to the launcher.
@@ -94,8 +100,8 @@ if (chatWidget) {
     sendButton.disabled = loading;
     messagesElement.setAttribute("aria-busy", String(loading));
     status.textContent = loading
-      ? "Searching Reid’s portfolio…"
-      : "AI answers are grounded in this portfolio.";
+      ? "Preparing an answer…"
+      : "Answers use information from this portfolio.";
   };
 
   const ask = async (question) => {
@@ -124,7 +130,11 @@ if (chatWidget) {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: conversation.slice(-8) }),
+        // Keep the transcript in the UI, but never trust client-supplied
+        // assistant turns as factual context on the server.
+        body: JSON.stringify({
+          messages: [{ role: "user", content: trimmed }],
+        }),
         signal: controller.signal,
       });
       const data = await response.json().catch(() => ({}));
@@ -146,6 +156,7 @@ if (chatWidget) {
           ? "That took too long. Please try the question again."
           : "The portfolio assistant is unavailable right now. You can still explore the sections or contact Reid directly.";
       addMessage("assistant", message, "contact");
+      suggestions.hidden = false;
     } finally {
       window.clearTimeout(timeout);
       setLoading(false);
@@ -153,6 +164,11 @@ if (chatWidget) {
     }
   };
 
+  if (isStaticMirror) {
+    launcher.querySelector("span:nth-child(2)").textContent =
+      "Open live assistant";
+    launcher.setAttribute("aria-label", "Open the live portfolio assistant");
+  }
   launcher.addEventListener("click", () => setOpen(true));
   closeButton.addEventListener("click", () => setOpen(false));
   window.addEventListener("portfolio:open-chat", () => setOpen(true));

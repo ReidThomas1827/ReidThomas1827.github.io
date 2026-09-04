@@ -101,6 +101,7 @@ if (reducedMotion.matches || !("IntersectionObserver" in window)) {
   );
   revealTargets.forEach((target) => revealObserver.observe(target));
 }
+document.documentElement.classList.add("js-ready");
 
 const observedSections = [...document.querySelectorAll("main section[id]")];
 if ("IntersectionObserver" in window) {
@@ -191,6 +192,9 @@ if (systemVisual) {
   document.addEventListener("visibilitychange", () =>
     document.hidden || !systemInView ? stopStates() : startStates(),
   );
+  document.addEventListener("portfolio:motion-toggle", (event) =>
+    event.detail?.paused ? stopStates() : startStates(),
+  );
 
   if (!reducedMotion.matches && finePointer.matches) {
     let visualFrame = 0;
@@ -259,21 +263,6 @@ if (!reducedMotion.matches && finePointer.matches) {
       visual.style.setProperty("--tilt-y", "0deg");
     });
   });
-}
-
-/* Workflow starts only when it can be seen */
-const workflow = document.querySelector("[data-workflow]");
-if (workflow) {
-  if (reducedMotion.matches || !("IntersectionObserver" in window))
-    workflow.classList.add("is-active");
-  else
-    new IntersectionObserver(
-      (entries) =>
-        entries.forEach((entry) =>
-          workflow.classList.toggle("is-active", entry.isIntersecting),
-        ),
-      { threshold: 0.2 },
-    ).observe(workflow);
 }
 
 /* Local, zero-network lab interaction. Decorative: responds to mouse and
@@ -525,6 +514,23 @@ document.addEventListener("visibilitychange", () => {
     timeTimer = window.setInterval(updateTime, 1000);
   }
 });
+
+const motionToggle = document.querySelector("[data-motion-toggle]");
+if (motionToggle) {
+  const setMotionPaused = (paused) => {
+    document.documentElement.classList.toggle("motion-paused", paused);
+    motionToggle.setAttribute("aria-pressed", String(paused));
+    motionToggle.textContent = paused ? "Resume motion" : "Pause motion";
+    document.dispatchEvent(
+      new CustomEvent("portfolio:motion-toggle", { detail: { paused } }),
+    );
+  };
+  motionToggle.addEventListener("click", () =>
+    setMotionPaused(
+      !document.documentElement.classList.contains("motion-paused"),
+    ),
+  );
+}
 
 console.info(
   "%c RT / SYSTEM ONLINE ",
