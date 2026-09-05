@@ -234,6 +234,18 @@ if (projectFilters) {
   });
 }
 
+let filterBeforePrint = null;
+window.addEventListener("beforeprint", () => {
+  filterBeforePrint = document.querySelector(
+    '[data-project-filter][aria-pressed="true"]',
+  )?.dataset.projectFilter;
+  applyProjectFilter?.("all");
+});
+window.addEventListener("afterprint", () => {
+  if (filterBeforePrint) applyProjectFilter?.(filterBeforePrint);
+  filterBeforePrint = null;
+});
+
 const observedSections = [...document.querySelectorAll("main section[id]")];
 if ("IntersectionObserver" in window) {
   const sectionObserver = new IntersectionObserver(
@@ -567,6 +579,7 @@ const runCommand = (button) => {
     copyText(window.location.href)
       .then(() => showToast("Current portfolio link copied."))
       .catch(() => showToast("Copy unavailable — use the browser address."));
+  else if (action === "print") window.print();
   else if (action === "motion")
     document.querySelector("[data-motion-toggle]")?.click();
   else if (action.startsWith("#")) {
@@ -651,6 +664,10 @@ document
       window.dispatchEvent(new CustomEvent("portfolio:open-chat")),
     ),
   );
+
+document
+  .querySelectorAll("[data-print]")
+  .forEach((button) => button.addEventListener("click", () => window.print()));
 
 /* Platform-correct keyboard shortcut hints (defaults assume macOS in markup) */
 const isMacPlatform = /mac|iphone|ipad|ipod/i.test(
@@ -779,6 +796,18 @@ if (copyEmailButton) {
 
 /* Dynamic footer time is real local client time */
 const localTime = document.querySelector("[data-local-time]");
+const connectionLabel = document.querySelector("[data-connection-label]");
+const updateConnectionLabel = () => {
+  const offline = !window.navigator.onLine;
+  document.documentElement.classList.toggle("is-offline", offline);
+  if (connectionLabel)
+    connectionLabel.textContent = offline
+      ? "Interface offline"
+      : "Interface online";
+};
+window.addEventListener("online", updateConnectionLabel);
+window.addEventListener("offline", updateConnectionLabel);
+updateConnectionLabel();
 const updateTime = () => {
   if (!localTime) return;
   const now = new Date();

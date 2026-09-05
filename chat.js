@@ -96,17 +96,25 @@ if (chatWidget) {
 
   const setLoading = (loading) => {
     requestInFlight = loading;
-    input.disabled = loading;
-    sendButton.disabled = loading;
+    const offline = !window.navigator.onLine;
+    input.disabled = loading || offline;
+    sendButton.disabled = loading || offline;
     messagesElement.setAttribute("aria-busy", String(loading));
-    status.textContent = loading
-      ? "Preparing an answer…"
-      : "Answers use information from this portfolio.";
+    status.textContent = offline
+      ? "Offline — the assistant needs a network connection."
+      : loading
+        ? "Preparing an answer…"
+        : "Answers use information from this portfolio.";
   };
 
   const ask = async (question) => {
     const trimmed = question.trim();
     if (!trimmed || requestInFlight) return;
+    if (!window.navigator.onLine) {
+      setLoading(false);
+      suggestions.hidden = false;
+      return;
+    }
 
     addMessage("user", trimmed);
     suggestions.hidden = true;
@@ -137,8 +145,11 @@ if (chatWidget) {
         signal: controller.signal,
       });
       const data = await response.json().catch(() => ({}));
-      if (!response.ok || !data.answer)
-        throw new Error(data.error || "Request failed");
+      if (!response.ok || !data.answer) {
+        const requestError = new Error(data.error || "Request failed");
+        requestError.status = response.status;
+        throw requestError;
+      }
 
       typing.remove();
       addMessage("assistant", data.answer, data.section);
@@ -147,7 +158,11 @@ if (chatWidget) {
       const message =
         error.name === "AbortError"
           ? "That took too long. Please try the question again."
-          : "The portfolio assistant is unavailable right now. You can still explore the sections or contact Reid directly.";
+          : !window.navigator.onLine
+            ? "The connection was lost. Reconnect and try the question again."
+            : error.status === 429
+              ? "The assistant is receiving too many questions right now. Please wait a moment and try again."
+              : "The portfolio assistant is unavailable right now. You can still explore the sections or contact Reid directly.";
       addMessage("assistant", message, "contact");
       suggestions.hidden = false;
     } finally {
@@ -168,6 +183,9 @@ if (chatWidget) {
   window.addEventListener("portfolio:close-chat", () => {
     if (chatWidget.classList.contains("chat-widget--open")) setOpen(false);
   });
+  window.addEventListener("online", () => setLoading(requestInFlight));
+  window.addEventListener("offline", () => setLoading(requestInFlight));
+  setLoading(false);
   if (new URLSearchParams(window.location.search).get("assistant") === "open") {
     setOpen(true);
     if (!isStaticMirror) {

@@ -419,6 +419,10 @@ ul {
   background: var(--accent);
   box-shadow: 0 0 10px var(--accent);
 }
+.is-offline .footer__system i {
+  background: var(--danger);
+  box-shadow: 0 0 10px rgba(255, 118, 108, 0.75);
+}
 .nav__command {
   display: flex;
   align-items: center;
@@ -2582,14 +2586,26 @@ kbd {
   display: flex;
   gap: 28px;
 }
-.site-footer nav a {
+.site-footer nav a,
+.footer__print {
   min-height: 32px;
   display: inline-flex;
   align-items: center;
+  padding: 0;
+  background: transparent;
+  color: inherit;
   font: 400 10px/1 var(--font-mono);
+  cursor: pointer;
   transition: color var(--duration-micro);
 }
-.site-footer nav a:hover {
+.footer__print {
+  display: none;
+}
+.js-ready .footer__print {
+  display: inline-flex;
+}
+.site-footer nav a:hover,
+.footer__print:hover {
   color: var(--accent);
 }
 .footer__system {
@@ -3754,38 +3770,90 @@ kbd {
   }
 }
 @media print {
+  @page {
+    margin: 14mm;
+  }
+  :root {
+    --background: #fff;
+    --background-deep: #fff;
+    --foreground: #111820;
+    --surface-1: #f5f7f8;
+    --surface-2: #edf1f3;
+    --surface-3: #e6ecef;
+    --border: rgba(17, 24, 32, 0.2);
+    --border-active: rgba(0, 95, 126, 0.55);
+    --muted: #3f4b54;
+    --muted-dim: #53616b;
+    --accent: #006b8d;
+    --accent-bright: #004f69;
+  }
   .ambient,
   .site-header,
   .scroll-progress,
   .chat-widget,
   .command-palette,
-  .cursor {
+  .cursor,
+  .site-toast,
+  .project-filters,
+  .text-link--button,
+  .footer__motion,
+  .footer__print,
+  .section--lab,
+  .hero__visual,
+  .project__visual,
+  .contact-orbit {
     display: none !important;
   }
   body {
     background: #fff;
     color: #111;
   }
+  body::after {
+    display: none;
+  }
+  .section,
+  .section--projects,
+  .section--experience,
+  .section--lab {
+    background: transparent;
+  }
   .section {
     padding-block: 40px;
   }
   .hero {
+    display: block;
     min-height: auto;
     padding-top: 20px;
+  }
+  .project,
+  .project--reverse {
+    display: block;
+    padding-block: 30px;
+    break-inside: avoid;
+  }
+  .project__body,
+  .project--reverse .project__body {
+    max-width: none;
+    order: initial;
+  }
+  .contact__content h2 {
+    font-size: 56px;
+    line-height: 0.94;
+  }
+  .site-footer {
+    border-color: var(--border);
   }
   .js-ready [data-reveal] {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
   }
-  .project__visual,
   .lab-card {
     border-color: #b8c2c7;
     background: #f5f7f8;
     color: #111;
   }
   .system-window,
-  .project__visual,
   .lab-grid {
     break-inside: avoid;
   }

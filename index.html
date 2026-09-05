@@ -1098,7 +1098,7 @@
         <a class="footer__brand" href="#home">RT / <span data-year></span></a>
         <p>Built on Cloudflare.<br />Made to stay understandable.</p>
       </div>
-      <nav aria-label="Social links">
+      <nav aria-label="Contact and portfolio links">
         <a href="mailto:reidcthomas.05@gmail.com">Email ↗</a
         ><a
           href="https://github.com/ReidThomas1827"
@@ -1110,10 +1110,12 @@
           target="_blank"
           rel="noopener noreferrer"
           >LinkedIn ↗</a
-        >
+        ><button class="footer__print" type="button" data-print>
+          Print portfolio ↗
+        </button>
       </nav>
       <div class="footer__system">
-        <span><i></i>Interface online</span
+        <span><i></i><span data-connection-label>Interface online</span></span
         ><span>LOCAL <time data-local-time>--:--:--</time></span
         ><button
           class="footer__motion"
@@ -1203,7 +1205,9 @@
             ↑
           </button>
         </form>
-        <p class="chat-status">Answers use information from this portfolio.</p>
+        <p class="chat-status" role="status" aria-live="polite">
+          Answers use information from this portfolio.
+        </p>
       </section>
       <button
         class="chat-launcher"
@@ -1364,6 +1368,14 @@
             data-command="copy-link"
           >
             <span><i>15</i>Copy current page link</span><kbd>↵</kbd>
+          </button>
+          <button
+            type="button"
+            id="command-option-16"
+            role="option"
+            data-command="print"
+          >
+            <span><i>16</i>Print portfolio</span><kbd>↵</kbd>
           </button>
         </div>
         <p class="command-empty" data-command-empty hidden>
